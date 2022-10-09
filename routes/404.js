@@ -2,9 +2,11 @@ const express = require('express')
 
 const router = express.Router()
 
+const path = require('path')
+
 router.use((req, res, next) => {
   console.log('route /404')
-  res.send('<h1>Page not found</h1>')  
+  res.sendFile(path.join(__dirname, '..', 'views', '404.html'))
 })
 
 module.exports = router
