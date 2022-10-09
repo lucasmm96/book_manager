@@ -2,21 +2,12 @@ const express = require('express')
 
 const app = express()
 
-const path = require('path')
+const bookRoute = require('./routes/book')
+const homeRoute = require('./routes/home')
+const notFoundRoute = require('./routes/404')
 
-app.use('/book', (req, res, next) => {
-  console.log('route /book')
-  res.send('<h1>Book</h1>')
-})
-
-app.get('/', (req, res, next) => {
-  console.log('route /')
-  res.send('<h1>Home</h1>')
-})
-
-app.use((req, res, next) => {
-  console.log('route /404')
-  res.send('<h1>Page not found</h1>')
-})
+app.use(bookRoute)
+app.use(homeRoute)
+app.use(notFoundRoute)
 
 app.listen(3000)
