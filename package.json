@@ -21,5 +21,8 @@
   "homepage": "https://github.com/lucasmm96/book_manager#readme",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
