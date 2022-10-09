@@ -1,0 +1,22 @@
+{
+  "name": "book_manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasmm96/book_manager.git"
+  },
+  "keywords": [
+    "book_manager"
+  ],
+  "author": "Lucas Martins Menezes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucasmm96/book_manager/issues"
+  },
+  "homepage": "https://github.com/lucasmm96/book_manager#readme"
+}
