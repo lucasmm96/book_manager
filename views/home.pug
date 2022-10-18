@@ -6,4 +6,10 @@ html(lang="en")
     main.main_content
       h2 Welcome to Book Manager!
       p What would you like to do?
+      form(action="/user-action" method='POST')
+        button Add a Book
+        button Remove a Book
+        button Manage Book status 
+        button List my Books
+        button Find books
     include ./includes/footer.pug
