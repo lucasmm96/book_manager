@@ -61,7 +61,8 @@ main {
 
 .form-card {
   padding: 20px 30px 40px 30px;
-  margin: 30px 0 30px 0;
+  margin: 30px auto 30px auto;
+  width: 52%;
   border-style: solid;
   border-radius: 20px;
 }
