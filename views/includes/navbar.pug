@@ -1,7 +1,7 @@
 header.main_header
   nav.main_header__nav
     ul.main_header__list
-      li
-        a.main_header__item(href="/") Home
-      li
-        a.main_header__item(href="/book") Book
+      li.main_header__item
+        a(href='/' class=(route === '/' ? 'active' : '')) Home
+      li.main_header__item
+        a(href='/book' class=(route === '/book' ? 'active' : '')) Book
