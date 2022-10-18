@@ -7,13 +7,7 @@ html(lang="en")
     title Home
     link(rel="stylesheet", href="css/main.css")
   body
-    header.main_header
-      nav.main_header__nav
-        ul.main_header__list
-          li
-            a.main_header__item(href="/") Home
-          li
-            a.main_header__item(href="/book") Book
+    include ./includes/navbar.pug
     main.main_content
       h1 Home
     footer.main_footer
