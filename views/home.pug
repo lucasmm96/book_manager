@@ -24,7 +24,7 @@ html(lang="en")
                   label(for=attribute.label)= attribute.label + ':'
                   div
                     each option in attribute.options
-                      input(type="radio", name=value, value=option)    
+                      input(type="radio", name=option)    
                       label(for=option)= option
           div.form-submit
             button(type='submit') Submit
