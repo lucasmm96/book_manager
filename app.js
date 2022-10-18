@@ -7,6 +7,9 @@ const bookRoute = require('./routes/book')
 const homeRoute = require('./routes/home')
 const notFoundRoute = require('./routes/404')
 
+app.set('view engine', 'pug')
+app.set('views', 'views')
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bookRoute)
