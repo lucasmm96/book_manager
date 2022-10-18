@@ -1,0 +1,31 @@
+[
+    {
+        "label": "Title",
+        "type": "text"
+    },
+    {
+        "label": "Author",
+        "type": "text"
+    },
+    {
+        "label": "AddedAt",
+        "type": "date"
+    },
+    {
+        "label": "FinishedAt",
+        "type": "date"
+    },
+    {
+        "label": "Score",
+        "type": "number"
+    },
+    {
+        "label": "Status",
+        "type": "text",
+        "options": [
+            "want to read",
+            "reading",
+            "read"
+        ]
+    }
+]

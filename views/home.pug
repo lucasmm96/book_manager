@@ -6,10 +6,26 @@ html(lang="en")
     main.main_content
       h2 Welcome to Book Manager!
       p What would you like to do?
-      form(action="/user-action" method='POST')
+      div
         button Add a Book
         button Remove a Book
         button Manage Book status 
         button List my Books
         button Find books
+      div.form-card
+        h3 Add a book:
+        form(action="/user-action" method='POST')
+          div.col
+            each attribute in bookAttributes
+              if attribute.label != "Status"
+                label(for=attribute.label)= attribute.label + ':'
+                input(type=attribute.type name=attribute.label)
+              else
+                  label(for=attribute.label)= attribute.label + ':'
+                  div
+                    each option in attribute.options
+                      input(type="radio", name=value, value=option)    
+                      label(for=option)= option
+          div.form-submit
+            button(type='submit') Submit
     include ./includes/footer.pug
