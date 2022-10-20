@@ -1,19 +1,9 @@
 const express = require('express')
-
 const router = express.Router()
+const booksController = require('../controllers/books')
 
-const bookAttributes = require ('../public/json/book-attributes.json')
+router.get('/', booksController.getAddBooks)
 
-const books = []
+router.post('/add-book', booksController.postAddBooks)
 
-router.get('/', (req, res) => {
-  res.render('home', { pageTitle: 'Home', route: '/', bookAttributes: bookAttributes })
-})
-
-router.post('/add-book', (req, res) => {
-  books.push(JSON.parse(JSON.stringify(req.body)));
-  res.redirect('/book')
-})
-
-exports.router = router
-exports.books = books
+module.exports = router

@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bookRoute)
-app.use(homeRoute.router)
+app.use(homeRoute)
 app.use(notFoundRoute)
 
 app.listen(3000)

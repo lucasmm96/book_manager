@@ -1,11 +1,7 @@
 const express = require('express')
-
 const router = express.Router()
+const booksController = require('../controllers/books')
 
-const home = require('./home')
-
-router.use('/book', (req, res) => {
-  res.render('book', { pageTitle: 'Book', route: '/book', bookList: home.books })
-})
+router.get('/book', booksController.getBooks)
 
 module.exports = router
