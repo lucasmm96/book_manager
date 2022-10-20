@@ -1,31 +1,46 @@
 [
-    {
-        "label": "Title",
-        "type": "text"
-    },
-    {
-        "label": "Author",
-        "type": "text"
-    },
-    {
-        "label": "AddedAt",
-        "type": "date"
-    },
-    {
-        "label": "FinishedAt",
-        "type": "date"
-    },
-    {
-        "label": "Score",
-        "type": "number"
-    },
-    {
-        "label": "Status",
-        "type": "text",
-        "options": [
-            "want to read",
-            "reading",
-            "read"
-        ]
-    }
+	{
+		"label": "Title",
+		"name": "title",
+		"type": "text"
+	},
+	{
+		"label": "Author",
+		"name": "author",
+		"type": "text"
+	},
+	{
+		"label": "AddedAt",
+		"name": "added_at",
+		"type": "date"
+	},
+	{
+		"label": "FinishedAt",
+		"name": "finished_at",
+		"type": "date"
+	},
+	{
+		"label": "Score",
+		"name": "score",
+		"type": "number"
+	},
+	{
+		"label": "Status",
+		"name": "status",
+		"type": "text",
+		"options": [
+			{
+				"label": "want to read",
+				"name": "want_to_read"
+			},
+			{
+				"label": "reading",
+				"name": "reading"
+			},
+			{
+				"label": "read",
+				"name": "read"
+			}
+		]
+	}
 ]
