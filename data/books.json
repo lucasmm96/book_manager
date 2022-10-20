@@ -1,0 +1,33 @@
+[
+    {
+        "title": "livro1",
+        "author": "autor1",
+        "added_at": "2022-10-01",
+        "finished_at": "2022-10-20",
+        "score": "6",
+        "status": "read"
+    },
+    {
+        "title": "dsdsdsd",
+        "author": "",
+        "added_at": "",
+        "finished_at": "",
+        "score": ""
+    },
+    {
+        "title": "O senhor dos aneis",
+        "author": "J. R. R. Tolkien",
+        "added_at": "2022-10-20",
+        "finished_at": "",
+        "score": "",
+        "status": "want_to_read"
+    },
+    {
+        "title": "teste",
+        "author": "teste",
+        "added_at": "2022-10-10",
+        "finished_at": "2022-10-10",
+        "score": "5",
+        "status": "want to read"
+    }
+]
