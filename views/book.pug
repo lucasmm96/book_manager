@@ -4,5 +4,15 @@ html(lang="en")
   body
     include ./includes/navbar.pug
     main
-      h1 Book
+      if bookList.length > 0
+        each book in bookList
+          .book-card
+            h2= book.title
+            p= 'Author: ' + book.author
+            p= 'AddedAt: ' + book.added_at
+            p= 'FinishedAt: ' + book.finished_at
+            p= 'Score: ' + book.score
+            p= 'Status: ' + book.status
+      else
+        h2 Books not found
     include ./includes/footer.pug
