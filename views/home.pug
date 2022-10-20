@@ -24,8 +24,8 @@ html(lang="en")
                   label(for=attribute.label)= attribute.label + ':'
                   div
                     each option in attribute.options
-                      input(type="radio", name=option)    
-                      label(for=option)= option
+                      input(type="radio", name=attribute.label)    
+                      label(for=attribute.label)= option
           div.form-submit
             button(type='submit') Submit
     include ./includes/footer.pug
