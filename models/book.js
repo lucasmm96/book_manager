@@ -35,7 +35,10 @@ module.exports = class Book {
     getBooksFromFile(callBack);
   }
   
-  // static findById(id, callBack) {
-  //   get
-  // }
+  static findById(id, callBack) {
+    getBooksFromFile(books => {
+      const book = books.find(b => b.id === id);
+      callBack(book);
+    })
+  }
 }
