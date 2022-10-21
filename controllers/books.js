@@ -1,15 +1,20 @@
 const bookAttr = require ('../public/data/book-attributes.json');
 const Book = require('../models/book')
-const books = [];
 
 exports.getAddBooks = (req, res) => {
   res.render('home', { pageTitle: 'Home', route: '/', bookAttributes: bookAttr });
 }
 
 exports.postAddBooks = (req, res) => {
-  const book = new Book(req.body.title, req.body.author, req.body.added_at, req.body.finished_at, req.body.score, req.body.status);
+  const title = req.body.title;
+  const author = req.body.author;
+  const added_at = req.body.added_at;
+  const finished_at = req.body.finished_at;
+  const score = req.body.score;
+  const status = req.body.status;
+  const book = new Book(title, author, added_at, finished_at, score, status);
   book.save();
-  res.redirect('/book');
+  res.redirect('/');
 }
 
 exports.getBooks = (req, res) => {
@@ -18,7 +23,9 @@ exports.getBooks = (req, res) => {
   });
 }
 
-exports.getBookDetails = (req, res) => {
-  const bookId = req.params.bookId;
-  console.log(bookId);
-}
+// exports.getBookDetails = (req, res, next) => {
+//   const bookId = req.params.bookId;
+//   Book.findById(bookId, book => {
+//     res.render('book/book-detail', { bookId: book });
+//   });
+// };
