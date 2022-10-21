@@ -1,7 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-
 const localDataPath = path.join(path.dirname(require.main.filename), 'data', 'books.json')
+const getBooksFromFile = callBack => {
+  fs.readFile(localDataPath, (err, fileContent) => {
+    if (err) {
+      callBack([]);
+    } else {
+      callBack(JSON.parse(fileContent));  
+    }
+  }); 
+};
 
 module.exports = class Book {
   constructor(title, author, added_at, finished_at, score, status) {
@@ -15,25 +23,19 @@ module.exports = class Book {
   }
   
   save() {
-    fs.readFile(localDataPath, (err, fileContent) => {
-      let books = [];
-      if (!err) {
-        books = JSON.parse(fileContent);
-      }
-      books.push(this)
+    getBooksFromFile(books => {
+      books.push(this);
       fs.writeFile(localDataPath, JSON.stringify(books), err => {
         console.log(err);
-      })
-    })
-    
+      });
+    });
   }
   
   static fetchAll(callBack) {
-    fs.readFile(localDataPath, (err, fileContent) => {
-      if (err) {
-        callBack([]);
-      }
-      callBack(JSON.parse(fileContent));
-    })
+    getBooksFromFile(callBack);
   }
+  
+  // static findById(id, callBack) {
+  //   get
+  // }
 }
