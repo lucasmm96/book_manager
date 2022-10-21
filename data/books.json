@@ -33,5 +33,14 @@
         "finished_at": "2022-10-10",
         "score": "5",
         "status": "want to read"
+    },
+    {
+        "id": "0.06105870142407355",
+        "title": "teste",
+        "author": "lucas",
+        "added_at": "2022-10-01",
+        "finished_at": "2022-10-26",
+        "score": "5",
+        "status": "want to read"
     }
 ]
