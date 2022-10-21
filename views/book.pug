@@ -13,6 +13,8 @@ html(lang="en")
             p FinishedAt: #{ book.finished_at }
             p Score: #{ book.score }
             p=(book.status === undefined || book.status === null ? 'Status: Not set' : 'Status: ' + book.status)
+            a(href=('/book/' + book.id))
+              button Details
       else
         h2 Books not found
     include ./includes/footer.pug
