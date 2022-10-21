@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main
+      h1 Book detail
+      .book-card
+        h2=book.title
+        p=(book.author === undefined || book.author === null ? 'Author: Not set' : 'Author: ' + book.author)
+        p=(book.added_at === undefined || book.added_at === null ? 'AddedAt: Not set' : 'AddedAt: ' + book.added_at)
+        p=(book.finished_at === undefined || book.finished_at === null ? 'FinishedAt: Not set' : 'FinishedAt: ' + book.finished_at)
+        p=(book.score === undefined || book.score === null ? 'Score: Not set' : 'Score: ' + book.score)
+        p=(book.status === undefined || book.status === null ? 'Status: Not set' : 'Status: ' + book.status)
+        a(href=('/book/' + book.id))
+    include ../includes/footer.pug
