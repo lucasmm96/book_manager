@@ -5,6 +5,7 @@ const localDataPath = path.join(path.dirname(require.main.filename), 'data', 'bo
 
 module.exports = class Book {
   constructor(title, author, added_at, finished_at, score, status) {
+    this.id = Math.random().toString();
     this.title = title;
     this.author = author;
     this.added_at = added_at;
