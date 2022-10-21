@@ -8,11 +8,6 @@ html(lang="en")
         each book in bookList
           .book-card
             h2= book.title
-            p Author: #{ book.author }
-            p AddedAt: #{ book.added_at }
-            p FinishedAt: #{ book.finished_at }
-            p Score: #{ book.score }
-            p=(book.status === undefined || book.status === null ? 'Status: Not set' : 'Status: ' + book.status)
             a(href=('/book/' + book.id))
               button Details
       else
