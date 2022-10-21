@@ -12,12 +12,7 @@ html(lang="en")
             p AddedAt: #{ book.added_at }
             p FinishedAt: #{ book.finished_at }
             p Score: #{ book.score }
-            if book.status === undefined
-              p Status: Not set
-            else 
-              p Status: #{ book.status }
-            a(href="/select-book")
-              button Select
+            p=(book.status === 'undefined' || book.status === null ? 'Status:' + book.status : 'Status: Not set')
       else
         h2 Books not found
     include ./includes/footer.pug
