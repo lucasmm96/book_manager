@@ -19,13 +19,13 @@ exports.postAddBooks = (req, res) => {
 
 exports.getBooks = (req, res) => {
   Book.fetchAll(books => {
-    res.render('book', { pageTitle: 'Book', route: '/book', bookList: books });  
+    res.render('books/book', { pageTitle: 'Book', route: '/book', bookList: books });  
   });
 }
 
-// exports.getBookDetails = (req, res, next) => {
-//   const bookId = req.params.bookId;
-//   Book.findById(bookId, book => {
-//     res.render('book/book-detail', { bookId: book });
-//   });
-// };
+exports.getBookDetails = (req, res) => {
+  const bookId = req.params.bookId;
+  Book.findById(bookId, book => {
+    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: book });
+  });
+};
