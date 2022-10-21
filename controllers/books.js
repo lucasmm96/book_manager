@@ -17,3 +17,8 @@ exports.getBooks = (req, res) => {
     res.render('book', { pageTitle: 'Book', route: '/book', bookList: books });  
   });
 }
+
+exports.getBookDetails = (req, res) => {
+  const bookId = req.params.bookId;
+  console.log(bookId);
+}
