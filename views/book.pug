@@ -12,7 +12,7 @@ html(lang="en")
             p AddedAt: #{ book.added_at }
             p FinishedAt: #{ book.finished_at }
             p Score: #{ book.score }
-            p=(book.status === 'undefined' || book.status === null ? 'Status:' + book.status : 'Status: Not set')
+            p=(book.status === undefined || book.status === null ? 'Status: Not set' : 'Status: ' + book.status)
       else
         h2 Books not found
     include ./includes/footer.pug
