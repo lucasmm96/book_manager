@@ -6,9 +6,9 @@ const getBooksFromFile = callBack => {
     if (err) {
       callBack([]);
     } else {
-      callBack(JSON.parse(fileContent));  
+      callBack(JSON.parse(fileContent));
     }
-  }); 
+  });
 };
 
 module.exports = class Book {
@@ -21,7 +21,7 @@ module.exports = class Book {
     this.score = score;
     this.status = status;
   }
-  
+
   save() {
     getBooksFromFile(books => {
       books.push(this);
@@ -30,11 +30,11 @@ module.exports = class Book {
       });
     });
   }
-  
+
   static fetchAll(callBack) {
     getBooksFromFile(callBack);
   }
-  
+
   static findById(id, callBack) {
     getBooksFromFile(books => {
       const book = books.find(b => b.id === id);

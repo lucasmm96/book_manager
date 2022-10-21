@@ -1,5 +1,5 @@
 const bookAttr = require ('../public/data/book-attributes.json');
-const Book = require('../models/book')
+const Book = require('../models/book');
 
 exports.getAddBooks = (req, res) => {
   res.render('home', { pageTitle: 'Home', route: '/', bookAttributes: bookAttr });
@@ -19,7 +19,7 @@ exports.postAddBooks = (req, res) => {
 
 exports.getBooks = (req, res) => {
   Book.fetchAll(books => {
-    res.render('books/book', { pageTitle: 'Book', route: '/book', bookList: books });  
+    res.render('books/book', { pageTitle: 'Book', route: '/book', bookList: books });
   });
 }
 
