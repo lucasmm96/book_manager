@@ -16,6 +16,8 @@ html(lang="en")
               p Status: Not set
             else 
               p Status: #{ book.status }
+            a(href="/select-book")
+              button Select
       else
         h2 Books not found
     include ./includes/footer.pug
