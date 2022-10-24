@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(lang='en')
   include ./includes/head.pug
   body
     include ./includes/navbar.pug
@@ -7,25 +7,14 @@ html(lang="en")
       h2 Welcome to Book Manager!
       p What would you like to do?
       div
-        button Add a Book
-        button Remove a Book
-        button Manage Book status
-        button List my Books
-        button Find books
-      div.form-card
-        h3 Add a book:
-        form(action="/add-book" method='POST')
-          div.col
-            each attribute in bookAttributes
-              if attribute.label != "Status"
-                label(for=attribute.name)= attribute.label + ':'
-                input(type=attribute.type name=attribute.name)
-              else
-                  label(for=attribute.name)= attribute.label + ':'
-                  div
-                    each option in attribute.options
-                      input(type="radio", name=attribute.name value=option.label)
-                      span= option.label
-          div.form-submit
-            button(type='submit') Submit
+        a(href="book/add") 
+          button Add a Book
+        a(href='book/remove') 
+          button Remove a Book
+        a(href='book/manage') 
+          button Manage Book status
+        a(href='book/list') 
+          button List my Books
+        a(href='book/find') 
+          button Find books
     include ./includes/footer.pug

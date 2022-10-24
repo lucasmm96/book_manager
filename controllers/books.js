@@ -1,9 +1,13 @@
 const bookAttr = require ('../public/data/book-attributes.json');
 const Book = require('../models/book');
 
+exports.getHome = (req, res) => {
+  res.render('home', { pageTitle: 'Home', route: '/' });
+};
+
 exports.getAddBooks = (req, res) => {
-  res.render('home', { pageTitle: 'Home', route: '/', bookAttributes: bookAttr });
-}
+  res.render('books/book-add', { pageTitle: 'Add Book', route: '/book/add', bookAttributes: bookAttr });
+};
 
 exports.postAddBooks = (req, res) => {
   const title = req.body.title;
@@ -15,17 +19,17 @@ exports.postAddBooks = (req, res) => {
   const book = new Book(title, author, added_at, finished_at, score, status);
   book.save();
   res.redirect('/');
-}
+};
 
-exports.getBooks = (req, res) => {
+exports.getBookList = (req, res) => {
   Book.fetchAll(books => {
-    res.render('books/book-list', { pageTitle: 'Book List', route: '/book-list', bookList: books });
+    res.render('books/book-list', { pageTitle: 'Book List', route: '/book/list', bookList: books });
   });
-}
+};
 
-exports.getBookDetails = (req, res) => {
+exports.getBookDetail = (req, res) => {
   const bookId = req.params.bookId;
   Book.findById(bookId, book => {
-    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book-detail', book: book });
+    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book/detail', book: book });
   });
 };
