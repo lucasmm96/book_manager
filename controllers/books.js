@@ -5,11 +5,11 @@ exports.getHome = (req, res) => {
   res.render('home', { pageTitle: 'Home', route: '/' });
 };
 
-exports.getAddBooks = (req, res) => {
+exports.getAddBook = (req, res) => {
   res.render('books/book-add', { pageTitle: 'Add Book', route: '/book', bookAttributes: bookAttr });
 };
 
-exports.postAddBooks = (req, res) => {
+exports.postAddBook = (req, res) => {
   const title = req.body.title;
   const author = req.body.author;
   const added_at = req.body.added_at;
