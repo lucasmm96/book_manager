@@ -6,7 +6,7 @@ exports.getHome = (req, res) => {
 };
 
 exports.getAddBooks = (req, res) => {
-  res.render('books/book-add', { pageTitle: 'Add Book', route: '/book/add', bookAttributes: bookAttr });
+  res.render('books/book-add', { pageTitle: 'Add Book', route: '/book', bookAttributes: bookAttr });
 };
 
 exports.postAddBooks = (req, res) => {
@@ -23,13 +23,13 @@ exports.postAddBooks = (req, res) => {
 
 exports.getBookList = (req, res) => {
   Book.fetchAll(books => {
-    res.render('books/book-list', { pageTitle: 'Book List', route: '/book/list', bookList: books });
+    res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: books });
   });
 };
 
 exports.getBookDetail = (req, res) => {
   const bookId = req.params.bookId;
   Book.findById(bookId, book => {
-    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book/detail', book: book });
+    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: book });
   });
 };
