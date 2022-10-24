@@ -5,16 +5,15 @@ html(lang='en')
     include ./includes/navbar.pug
     main.main_content
       h2 Welcome to Book Manager!
-      p What would you like to do?
-      div
-        a(href="book/add") 
-          button Add a Book
-        a(href='book/remove') 
-          button Remove a Book
-        a(href='book/manage') 
-          button Manage Book status
-        a(href='book/list') 
-          button List my Books
-        a(href='book/find') 
-          button Find books
+      .cards-wrapper
+        a.custom-link(href='book/list')
+          .card
+            .container
+              h3 My Books
+              p Manage my books
+        a.custom-link(href='book/add')
+          .card
+            .container
+              h3 Add a Book
+              p Add a new book to my list
     include ./includes/footer.pug
