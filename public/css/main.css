@@ -57,3 +57,14 @@ main {
   border-style: solid;
   border-radius: 20px;  
 }
+
+td {
+  padding: 10px 20px 10px 20px;
+}
+
+td a {
+  text-decoration: none;
+  margin: 0 5px 0 5px;
+  padding: 0 5px 0 5px;
+  border-style: solid;
+}
