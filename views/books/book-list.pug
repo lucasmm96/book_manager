@@ -5,11 +5,16 @@ html(lang="en")
     include ../includes/navbar.pug
     main
       if bookList.length > 0
-        each book in bookList
-          .book-card
-            h2= book.title
-            a(href=('/book/' + book.id))
-              button Details
+        table
+          tr
+            th Title
+            th Options
+          each book in bookList
+            tr
+              td= book.title
+              td
+                a(href=('/book/detail/' + book.id)) Details
+                a(href=('/book/remove/' + book.id)) Remove
       else
         h2 Books not found
     include ../includes/footer.pug
