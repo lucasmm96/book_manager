@@ -34,8 +34,8 @@ exports.postAddBook = (req, res) => {
   res.redirect('/');
 };
 
-exports.postRemoveBook = (req, res) => {
-  const bookId = req.body.bookId;
+exports.getRemoveBook = (req, res) => {
+  const bookId = req.params.bookId;
   Book.remove(bookId);
   res.redirect('/');
 };

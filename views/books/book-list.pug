@@ -13,11 +13,9 @@ html(lang="en")
             tr
               td= book.title
               td
-                form(action="/book-remove", method="POST") 
-                  a(href=('/book/detail/' + book.id)) Details
-                  input(type='hidden' name='bookId' value=(book.id))
-                  a(href='')
-                    button.clean-style(type='submit') Remove
+                a(href=('/book/detail/' + book.id)) Details
+                a(href=('/book/add/' + book.id)) Edit
+                a(href=('/book/remove/' + book.id)) Remove
       else
         h2 Books not found
     include ../includes/footer.pug
