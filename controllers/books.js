@@ -33,3 +33,10 @@ exports.postAddBook = (req, res) => {
   book.save();
   res.redirect('/');
 };
+
+exports.postRemoveBook = (req, res) => {
+  const bookId = req.body.bookId;
+  Book.remove(bookId);
+  // res.redirect('/book/list');
+  res.redirect('/');
+};

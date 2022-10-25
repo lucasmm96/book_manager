@@ -1,12 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const localDataPath = path.join(path.dirname(require.main.filename), 'data', 'books.json')
-const getBooksFromFile = callBack => {
+const getBooksFromFile = callback => {
   fs.readFile(localDataPath, (err, fileContent) => {
     if (err) {
-      callBack([]);
+      callback([]);
     } else {
-      callBack(JSON.parse(fileContent));
+      callback(JSON.parse(fileContent));
     }
   });
 };
@@ -31,14 +31,23 @@ module.exports = class Book {
     });
   }
 
-  static fetchAll(callBack) {
-    getBooksFromFile(callBack);
+  static remove(bookId) {
+    getBooksFromFile(books => {
+      const updatedBookList = books.filter(book => book.id !== bookId);
+      fs.writeFile(localDataPath, JSON.stringify(updatedBookList), err => {
+        console.log(err);
+      });
+    });
   }
 
-  static findById(id, callBack) {
+  static fetchAll(callback) {
+    getBooksFromFile(callback);
+  }
+
+  static findById(id, callback) {
     getBooksFromFile(books => {
       const book = books.find(b => b.id === id);
-      callBack(book);
+      callback(book);
     })
   }
 }

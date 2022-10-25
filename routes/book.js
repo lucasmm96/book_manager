@@ -10,4 +10,6 @@ router.get('/book/add', booksController.getAddBook);
 
 router.post('/add-book', booksController.postAddBook);
 
+router.post('/book-remove', booksController.postRemoveBook);
+
 module.exports = router;
