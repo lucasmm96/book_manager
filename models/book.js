@@ -12,24 +12,30 @@ const getBooksFromFile = callback => {
 };
 
 module.exports = class Book {
-  constructor(title, author, added_at, finished_at, score, status) {
-    this.id = Math.random().toString();
+  constructor(id, title, author, added_at, finished_at, score, status) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.added_at = added_at;
     this.finished_at = finished_at;
     this.score = score;
     this.status = status;
-  }
+  };
 
   save() {
     getBooksFromFile(books => {
-      books.push(this);
+      if(this.id) {
+        const bookIndex = books.findIndex(book => book.id === this.id);
+        books[bookIndex] = this;
+      } else {
+        this.id = Math.random().toString();
+        books.push(this);
+      }
       fs.writeFile(localDataPath, JSON.stringify(books), err => {
         console.log(err);
       });
     });
-  }
+  };
 
   static remove(bookId) {
     getBooksFromFile(books => {
@@ -38,16 +44,16 @@ module.exports = class Book {
         console.log(err);
       });
     });
-  }
+  };
 
   static fetchAll(callback) {
     getBooksFromFile(callback);
-  }
+  };
 
   static findById(id, callback) {
     getBooksFromFile(books => {
       const book = books.find(b => b.id === id);
       callback(book);
-    })
-  }
+    });
+  };
 }

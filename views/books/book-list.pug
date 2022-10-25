@@ -14,7 +14,7 @@ html(lang="en")
               td= book.title
               td
                 a(href=('/book/detail/' + book.id)) Details
-                a(href=('/book/add/' + book.id)) Edit
+                a(href=('/book/edit/' + book.id)) Edit
                 a(href=('/book/remove/' + book.id)) Remove
       else
         h2 Books not found

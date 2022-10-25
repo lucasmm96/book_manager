@@ -6,18 +6,28 @@ html(lang="en")
     main.main_content
       div.form-card
         h3 Add a book:
-        form(action="/add-book" method='POST')
+        form(action=(editMode === 'true' ? '/edit-book' : '/add-book') method='POST')
           div.col
-            each attribute in bookAttributes
-              if attribute.label != "Status"
-                label(for=attribute.name)= attribute.label + ':'
-                input(type=attribute.type name=attribute.name)
-              else
-                  label(for=attribute.name)= attribute.label + ':'
-                  div
-                    each option in attribute.options
-                      input(type="radio", name=attribute.name value=option.label)
-                      span= option.label
-          div.form-submit
-            button(type='submit') Submit
+            label(for='title') Title:
+            input(type='text' name='title' value=(editMode === 'true' ? book.title : ''))
+            label(for='author') Author:
+            input(type='text' name='author' value=(editMode === 'true' ? book.author : ''))
+            label(for='added_at') AddedAt:
+            input(type='date' name='added_at' value=(editMode === 'true' ? book.added_at : ''))
+            label(for='finished_at') FinishedAt:
+            input(type='date' name='finished_at' value=(editMode === 'true' ? book.finished_at : ''))
+            label(for='score') Score:
+            input(type='number' name='score' value=(editMode === 'true' ? book.score : ''))
+            label(for='status') Status:
+            div
+              input(type='radio' name='status' value='want to read' checked=(editMode === 'true' && book.status === 'want to read' ? true : false))
+              span want to read
+              input(type='radio' name='status' value='reading' checked=(editMode === 'true' && book.status === 'reading' ? true : false))
+              span reading
+              input(type='radio' name='status' value='read' checked=(editMode === 'true' && book.status === 'read' ? true : false))
+              span read
+            if editMode === 'true'
+              input(type='hidden' name='id' value=book.id)
+            div.form-submit
+              button(type='submit') Save
     include ../includes/footer.pug
