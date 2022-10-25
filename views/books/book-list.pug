@@ -17,7 +17,7 @@ html(lang="en")
                   a(href=('/book/detail/' + book.id)) Details
                   input(type='hidden' name='bookId' value=(book.id))
                   a(href='')
-                    button(type='submit') Remove
+                    button.clean-style(type='submit') Remove
       else
         h2 Books not found
     include ../includes/footer.pug

@@ -78,11 +78,10 @@ td a {
   border-style: solid;
 }
 
-
-button{
-  border:none;
-  background:none;
-  padding:0;
-  text-align:left; 
+.clean-style {
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left; 
   cursor: pointer;
 }
