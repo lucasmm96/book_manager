@@ -52,7 +52,7 @@ main {
 .col {
   display: grid;
   grid-template-columns: max-content max-content;
-  grid-gap: 20px;  
+  grid-gap: 20px;
 }
 
 .form-submit {
@@ -64,7 +64,7 @@ main {
   margin: 30px auto 30px auto;
   width: 25%;
   border-style: solid;
-  border-radius: 20px;  
+  border-radius: 20px;
 }
 
 td {
@@ -82,6 +82,6 @@ td a {
   border: none;
   background: none;
   padding: 0;
-  text-align: left; 
+  text-align: left;
   cursor: pointer;
 }
