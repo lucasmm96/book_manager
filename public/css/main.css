@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Courier New', Courier, monospace;
+  background-color: rgb(232, 232, 232);
 }
 
 main {
@@ -75,4 +76,13 @@ td a {
   margin: 0 5px 0 5px;
   padding: 0 5px 0 5px;
   border-style: solid;
+}
+
+
+button{
+  border:none;
+  background:none;
+  padding:0;
+  text-align:left; 
+  cursor: pointer;
 }
