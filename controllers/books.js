@@ -6,9 +6,9 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-  Book.fetchAll(books => {
-    res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: books });
-  });
+  Book.fetchAll().then(([rows, fieldData]) => {
+    res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: rows });
+  }).catch(err => console.log(err));
 };
 
 exports.getBookDetail = (req, res) => {
@@ -49,8 +49,6 @@ exports.postEditBook = (req, res) => {
   const finished_at = req.body.finished_at;
   const score = req.body.score;
   const status = req.body.status;
-  // Book.edit(id, title, author, added_at, finished_at, score, status);
-  // res.redirect('/');
   const book = new Book(id, title, author, added_at, finished_at, score, status);
   book.save();
   res.redirect('/');

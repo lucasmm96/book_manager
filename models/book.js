@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const db = require('../util/database')
 const localDataPath = path.join(path.dirname(require.main.filename), 'data', 'books.json')
 const getBooksFromFile = callback => {
   fs.readFile(localDataPath, (err, fileContent) => {
@@ -46,8 +47,8 @@ module.exports = class Book {
     });
   };
 
-  static fetchAll(callback) {
-    getBooksFromFile(callback);
+  static fetchAll() {
+    return db.execute('SELECT * FROM node_course.book;');
   };
 
   static findById(id, callback) {
@@ -57,3 +58,14 @@ module.exports = class Book {
     });
   };
 }
+
+
+// const db = require('./util/database')
+
+// db.execute('SELECT * FROM node_course.book;')
+//   .then(result => {
+//     console.log(result[0]);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
