@@ -105,3 +105,4 @@ dist
 
 # Other
 .DS_Store
+data/books.json
