@@ -6,16 +6,18 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-  Book.fetchAll().then(([rows, fieldData]) => {
+  Book.fetchAll().then(([rows]) => {
     res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: rows });
   }).catch(err => console.log(err));
 };
 
 exports.getBookDetail = (req, res) => {
   const bookId = req.params.bookId;
-  Book.findById(bookId, book => {
-    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: book });
-  });
+  Book.findById(bookId)
+    .then(([rows]) => {
+      res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: rows[0] });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getAddBook = (req, res) => {
@@ -29,16 +31,22 @@ exports.postAddBook = (req, res) => {
   const finished_at = req.body.finished_at;
   const score = req.body.score;
   const status = req.body.status;
-  const book = new Book(title, author, added_at, finished_at, score, status);
-  book.save();
-  res.redirect('/');
+  const book = new Book(null, title, author, added_at, finished_at, score, status);
+  book.save()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
+
 };
 
 exports.getEditBook = (req, res) => {
   const bookId = req.params.bookId;
-  Book.findById(bookId, bookData => {
-    res.render('books/book-add', { pageTitle: 'Edit Book', route: '/book', bookAttributes: bookAttr, book: bookData, editMode: 'true'});
-  });
+  Book.findById(bookId)
+    .then(([rows]) => {
+      res.render('books/book-add', { pageTitle: 'Edit Book', route: '/book', book: rows[0], editMode: 'true'});
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postEditBook = (req, res) => {
@@ -50,12 +58,18 @@ exports.postEditBook = (req, res) => {
   const score = req.body.score;
   const status = req.body.status;
   const book = new Book(id, title, author, added_at, finished_at, score, status);
-  book.save();
-  res.redirect('/');
+  book.save()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getRemoveBook = (req, res) => {
   const bookId = req.params.bookId;
-  Book.remove(bookId);
-  res.redirect('/');
+  Book.remove(bookId)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
 };
