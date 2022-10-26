@@ -13,9 +13,9 @@ html(lang="en")
             label(for='author') Author:
             input(type='text' name='author' value=(editMode === 'true' ? book.author : ''))
             label(for='added_at') AddedAt:
-            input(type='date' name='added_at' value=(editMode === 'true' ? book.added_at : ''))
+            input(type='date' name='added_at' value=(editMode === 'true' ? book.added_at.toISOString().slice(0, 10) : ''))
             label(for='finished_at') FinishedAt:
-            input(type='date' name='finished_at' value=(editMode === 'true' ? book.finished_at : ''))
+            input(type='date' name='finished_at' value=(editMode === 'true' ? book.finished_at.toISOString().slice(0, 10) : ''))
             label(for='score') Score:
             input(type='number' name='score' value=(editMode === 'true' ? book.score : ''))
             label(for='status') Status:
