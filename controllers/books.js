@@ -12,11 +12,9 @@ exports.getBookList = (req, res) => {
 
 exports.getBookDetail = (req, res) => {
   const bookId = req.params.bookId;
-  Book.findById(bookId)
-    .then(([rows]) => {
-      res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: rows[0] });
-    })
-    .catch(err => console.log(err));
+  Book.findByPk(bookId).then(rows => {
+    res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: rows });
+  }).catch(err => console.log(err));
 };
 
 exports.getAddBook = (req, res) => {
