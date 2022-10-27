@@ -24,15 +24,18 @@ app.use(notFoundRoute);
 Book.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Book);
 
-sequelize.sync()
-  .then(() => {
-    return User.findByPk(1);
-  }).then(user =>  {
-    if (!user) {
-      return User.create({ name: 'Lucas', email: 'lucasma@br.ibm.com' });
-    }
-    return user;
-  }).then(() => {
-    app.listen(3000);
-  })
-  .catch(err => console.log(err));
+sequelize
+	.sync()
+	.then(() => {
+		return User.findByPk(1);
+	})
+	.then(user => {
+		if (!user) {
+			return User.create({ name: 'Lucas', email: 'lucasma@br.ibm.com' });
+		}
+		return user;
+	})
+	.then(() => {
+		app.listen(3000);
+	})
+	.catch(err => console.log(err));
