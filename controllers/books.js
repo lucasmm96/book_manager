@@ -28,6 +28,7 @@ exports.postAddBook = (req, res) => {
   const finished_at = req.body.finished_at;
   const score = req.body.score;
   const status = req.body.status;
+  
   Book.create({
     title: title,
     author: author,
@@ -41,11 +42,9 @@ exports.postAddBook = (req, res) => {
 
 exports.getEditBook = (req, res) => {
   const bookId = req.params.bookId;
-  Book.findById(bookId)
-    .then(([rows]) => {
-      res.render('books/book-add', { pageTitle: 'Edit Book', route: '/book', book: rows[0], editMode: 'true'});
-    })
-    .catch(err => console.log(err));
+  Book.findByPk(bookId).then(rows => {
+    res.render('books/book-add', { pageTitle: 'Edit Book', route: '/book', book: rows, editMode: 'true'});
+  }).catch(err => console.log(err));
 };
 
 exports.postEditBook = (req, res) => {
