@@ -36,7 +36,7 @@ exports.postAddBook = (req, res) => {
     finished_at: finished_at,
     score: score,
     status: status
-  }).then(result => console.log(result))
+  }).then(() => { res.redirect('/') })
     .catch(err => console.log(err));
 };
 
@@ -48,26 +48,35 @@ exports.getEditBook = (req, res) => {
 };
 
 exports.postEditBook = (req, res) => {
-  const id = req.body.id;
-  const title = req.body.title;
-  const author = req.body.author;
-  const added_at = req.body.added_at;
-  const finished_at = req.body.finished_at;
-  const score = req.body.score;
-  const status = req.body.status;
-  const book = new Book(id, title, author, added_at, finished_at, score, status);
-  book.save()
+  const boodId = req.body.id;
+  const updatedTitle = req.body.title;
+  const updatedAuthor = req.body.author;
+  const updatedAdded_at = req.body.added_at;
+  const updatedFinished_at = req.body.finished_at;
+  const updatedScore = req.body.score;
+  const updatedStatus = req.body.status;
+  
+  Book.update(
+    {
+      title: updatedTitle,
+      author: updatedAuthor,
+      added_at: updatedAdded_at,
+      finished_at: updatedFinished_at,
+      score: updatedScore,
+      status: updatedStatus
+    },
+    { where: { id: boodId } })
     .then(() => {
       res.redirect('/');
-    })
-    .catch(err => console.log(err));
+    }).catch(err => console.log(err))
 };
 
 exports.getRemoveBook = (req, res) => {
   const bookId = req.params.bookId;
-  Book.remove(bookId)
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch(err => console.log(err));
+  Book.destroy({
+    where: { id: bookId }
+  }).then(() => {
+    res.redirect('/');
+  })
+  .catch(err => console.log(err));
 };
