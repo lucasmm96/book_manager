@@ -5,7 +5,7 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-  Book.fetchAll().then(([rows]) => {
+  Book.findAll().then(rows => {
     res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: rows });
   }).catch(err => console.log(err));
 };
