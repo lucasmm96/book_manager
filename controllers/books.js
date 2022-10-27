@@ -1,4 +1,3 @@
-const bookAttr = require ('../public/data/book-attributes.json');
 const Book = require('../models/book');
 
 exports.getHome = (req, res) => {
@@ -21,7 +20,7 @@ exports.getBookDetail = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
-  res.render('books/book-add', { pageTitle: 'Add Book', route: '/book', bookAttributes: bookAttr, editMode: 'false'});
+  res.render('books/book-add', { pageTitle: 'Add Book', route: '/book', editMode: 'false'});
 };
 
 exports.postAddBook = (req, res) => {
@@ -31,13 +30,15 @@ exports.postAddBook = (req, res) => {
   const finished_at = req.body.finished_at;
   const score = req.body.score;
   const status = req.body.status;
-  const book = new Book(null, title, author, added_at, finished_at, score, status);
-  book.save()
-    .then(() => {
-      res.redirect('/');
-    })
+  Book.create({
+    title: title,
+    author: author,
+    added_at: added_at,
+    finished_at: finished_at,
+    score: score,
+    status: status
+  }).then(result => console.log(result))
     .catch(err => console.log(err));
-
 };
 
 exports.getEditBook = (req, res) => {
