@@ -5,7 +5,7 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-	Book.findAll()
+	req.user.getBooks()
 		.then(rows => {
 			res.render('books/book-list', {
 				pageTitle: 'Book List',
@@ -18,12 +18,13 @@ exports.getBookList = (req, res) => {
 
 exports.getBookDetail = (req, res) => {
 	const bookId = req.params.bookId;
-	Book.findByPk(bookId)
+	req.user.getBooks({ where: { id: bookId } })
 		.then(rows => {
+			const row = rows[0];
 			res.render('books/book-detail', {
 				pageTitle: 'Book Detail',
 				route: '/book',
-				book: rows,
+				book: row,
 			});
 		})
 		.catch((err) => console.log(err));
@@ -62,16 +63,17 @@ exports.postAddBook = (req, res) => {
 
 exports.getEditBook = (req, res) => {
 	const bookId = req.params.bookId;
-	Book.findByPk(bookId)
+	req.user.getBooks({ where: { id: bookId } })
 		.then(rows => {
+			const row = rows[0];
 			res.render('books/book-add', {
 				pageTitle: 'Edit Book',
 				route: '/book',
-				book: rows,
+				book: row,
 				editMode: 'true',
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch(err => console.log(err));
 };
 
 exports.postEditBook = (req, res) => {
