@@ -17,6 +17,15 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((res, res, next) => {
+	User.findByPk(1)
+		.then(user => {
+			req.user = user;
+			next();
+		})
+		.catch(err => console.log(err));
+});
+
 app.use(bookRoute);
 app.use(homeRoute);
 app.use(notFoundRoute);
