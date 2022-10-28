@@ -45,14 +45,15 @@ exports.postAddBook = (req, res) => {
 	const newScore = req.body.score;
 	const newStatus = req.body.status;
 
-	Book.create({
-		title: newTitle,
-		author: newAuthor,
-		added_at: newAddedAt,
-		finished_at: newFinishedAt,
-		score: newScore,
-		status: newStatus,
-	})
+	req.user
+		.createBook({
+			title: newTitle,
+			author: newAuthor,
+			added_at: newAddedAt,
+			finished_at: newFinishedAt,
+			score: newScore,
+			status: newStatus
+		})
 		.then(() => {
 			res.redirect('/');
 		})
