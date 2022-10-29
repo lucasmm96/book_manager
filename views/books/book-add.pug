@@ -5,7 +5,10 @@ html(lang="en")
     include ../includes/navbar.pug
     main.main_content
       div.form-card
-        h3 Add a book:
+        if editMode === 'true'
+          h3 Edit a book:
+        else
+          h3 Add a book:
         form(action=(editMode === 'true' ? '/edit-book' : '/add-book') method='POST')
           div.col
             label(for='title') Title:
