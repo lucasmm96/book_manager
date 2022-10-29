@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+const mongoConnect = require('./util/database');
+
 const path = require('path');
 
-const bookRoute = require('./routes/book');
-const homeRoute = require('./routes/home');
-const notFoundRoute = require('./routes/404');
+// const bookRoute = require('./routes/book');
+// const homeRoute = require('./routes/home');
+// const notFoundRoute = require('./routes/404');
 
 app.set('view engine', 'pug');
 app.set('views', 'views');
@@ -23,8 +25,11 @@ app.use((req, res, next) => {
 	// 	.catch(err => console.log(err));
 });
 
-app.use(bookRoute);
-app.use(homeRoute);
-app.use(notFoundRoute);
+// app.use(bookRoute);
+// app.use(homeRoute);
+// app.use(notFoundRoute);
 
-app.listen(3000);
+mongoConnect(client => {
+	console.log(client);
+	app.listen(3000);	
+});
