@@ -1,4 +1,4 @@
-const mongoConnect = require('../util/database');
+const getDb = require('../util/database').getDb;
 
 class Book {
 	constructor(title, author, addedAt, finishedAt, score, status) {
@@ -11,7 +11,13 @@ class Book {
 	}
 	
 	save() {
-		
+		const db = getDb();
+		db.collection('books')
+			.insertOne(this)
+			.then(result => {
+				console.log(result);
+			})
+			.catch(err => console.log(err));
 	}
 }
 
