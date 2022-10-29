@@ -1,19 +1,18 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../util/database');
+const mongoConnect = require('../util/database');
 
-const Book = sequelize.define('book', {
-	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
-		allowNull: false,
-		primaryKey: true
-	},
-	title: Sequelize.STRING,
-	author: Sequelize.STRING,
-	added_at: Sequelize.DATE,
-	finished_at: Sequelize.DATE,
-	score: Sequelize.DOUBLE,
-	status: Sequelize.STRING,
-});
+class Book {
+	constructor(title, author, addedAt, finishedAt, score, status) {
+		this.title = title;
+		this.author = author;
+		this.addedAt = addedAt;
+		this.finishedAt = finishedAt;
+		this.score = score;
+		this.status = status;
+	}
+	
+	save() {
+		
+	}
+}
 
 module.exports = Book;
