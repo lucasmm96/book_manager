@@ -4,17 +4,13 @@ exports.getHome = (req, res) => {
 	res.render('home', { pageTitle: 'Home', route: '/' });
 };
 
-// exports.getBookList = (req, res) => {
-// 	req.user.getBooks()
-// 		.then(rows => {
-// 			res.render('books/book-list', {
-// 				pageTitle: 'Book List',
-// 				route: '/book',
-// 				bookList: rows,
-// 			});
-// 		})
-// 		.catch((err) => console.log(err));
-// };
+exports.getBookList = (req, res) => {
+	Book.fetchAll()
+		.then(rows => {
+			res.render('books/book-list', { pageTitle: 'Book List', route: '/book', bookList: rows });
+		})
+		.catch(err => console.log(err));
+};
 
 // exports.getBookDetail = (req, res) => {
 // 	const bookId = req.params.bookId;
@@ -47,8 +43,12 @@ exports.postAddBook = (req, res) => {
 	const newStatus = req.body.status;
 	
 	const book = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus);
-	book.save();
-	res.redirect('/')
+	book.save()
+		.then(() => {
+			console.log('Book successfully created:');
+			res.redirect('/')		
+		})
+		.catch(err => console.log(err));
 };
 
 // exports.getEditBook = (req, res) => {

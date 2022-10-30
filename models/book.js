@@ -12,10 +12,21 @@ class Book {
 	
 	save() {
 		const db = getDb();
-		db.collection('books')
+		return db.collection('books')
 			.insertOne(this)
 			.then(result => {
 				console.log(result);
+			})
+			.catch(err => console.log(err));
+	}
+	
+	static fetchAll() {
+		const db = getDb();
+		return db.collection('books')
+			.find()
+			.toArray()
+			.then(rows => {
+				return rows;
 			})
 			.catch(err => console.log(err));
 	}
