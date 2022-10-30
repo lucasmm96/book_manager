@@ -30,7 +30,7 @@ html(lang="en")
               input(type='radio' name='status' value='read' checked=(editMode === 'true' && book.status === 'read' ? true : false))
               span read
             if editMode === 'true'
-              input(type='hidden' name='id' value=book.id)
+              input(type='hidden' name='id' value=book._id)
             div.form-submit
               button(type='submit') Save
     include ../includes/footer.pug

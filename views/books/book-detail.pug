@@ -12,5 +12,5 @@ html(lang="en")
         p=(book.finished_at === undefined || book.finished_at === null ? 'FinishedAt: Not set' : 'FinishedAt: ' + book.finished_at)
         p=(book.score === undefined || book.score === null ? 'Score: Not set' : 'Score: ' + book.score)
         p=(book.status === undefined || book.status === null ? 'Status: Not set' : 'Status: ' + book.status)
-        a(href=('/book/' + book.id))
+        a(href=('/book/' + book._id))
     include ../includes/footer.pug
