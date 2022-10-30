@@ -12,19 +12,15 @@ exports.getBookList = (req, res) => {
 		.catch(err => console.log(err));
 };
 
-// exports.getBookDetail = (req, res) => {
-// 	const bookId = req.params.bookId;
-// 	req.user.getBooks({ where: { id: bookId } })
-// 		.then(rows => {
-// 			const row = rows[0];
-// 			res.render('books/book-detail', {
-// 				pageTitle: 'Book Detail',
-// 				route: '/book',
-// 				book: row,
-// 			});
-// 		})
-// 		.catch((err) => console.log(err));
-// };
+exports.getBookDetail = (req, res) => {
+	const bookId = req.params.bookId;
+	Book.findById(bookId)
+		.then(row => {
+			console.log(row);
+			res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: row });			
+		})
+		.catch(err => console.log(err));
+};
 
 exports.getAddBook = (req, res) => {
 	res.render('books/book-add', {
