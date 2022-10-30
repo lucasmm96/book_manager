@@ -32,5 +32,8 @@ html(lang="en")
             if editMode === 'true'
               input(type='hidden' name='id' value=book._id)
             div.form-submit
-              button(type='submit') Save
+              if editMode === 'true'
+                button(type='submit') Update Book
+              else
+                button(type='submit') Save Book
     include ../includes/footer.pug
