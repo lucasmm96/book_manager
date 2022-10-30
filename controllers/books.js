@@ -38,10 +38,10 @@ exports.postAddBook = (req, res) => {
 	const newScore = req.body.score;
 	const newStatus = req.body.status;
 
-	const book = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus);
-	book.save()
+	const newBook = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus);
+	newBook.save()
 		.then(() => {
-			console.log('Book successfully created:');
+			console.log('Book successfully created');
 			res.redirect('/')
 		})
 		.catch(err => console.log(err));
@@ -56,33 +56,23 @@ exports.getEditBook = (req, res) => {
 		.catch(err => console.log(err));
 };
 
-// exports.postEditBook = (req, res) => {
-// 	const boodId = req.body.id;
-// 	const updatedAuthor = req.body.author;
-// 	const updatedAdded_at = req.body.added_at;
-// 	const updatedFinished_at = req.body.finished_at;
-// 	const updatedTitle = req.body.title;
-// 	const updatedScore = req.body.score;
-// 	const updatedStatus = req.body.status;
+exports.postEditBook = (req, res) => {
+	const bookId = req.body.id;
+	const updatedAuthor = req.body.author;
+	const updatedAddedAt = req.body.addedAt;
+	const updatedFinishedAt = req.body.finishedAt;
+	const updatedTitle = req.body.title;
+	const updatedScore = req.body.score;
+	const updatedStatus = req.body.status;
 
-// 	Book.update(
-// 		{
-// 			title: updatedTitle,
-// 			author: updatedAuthor,
-// 			added_at: updatedAdded_at,
-// 			finished_at: updatedFinished_at,
-// 			score: updatedScore,
-// 			status: updatedStatus,
-// 		},
-// 		{
-// 			where: { id: boodId },
-// 		}
-// 	)
-// 		.then(() => {
-// 			res.redirect('/');
-// 		})
-// 		.catch((err) => console.log(err));
-// };
+	const updatedBook = new Book (updatedTitle, updatedAuthor, updatedAddedAt, updatedFinishedAt, updatedScore, updatedStatus, bookId);
+	updatedBook.save()
+		.then(() => {
+			console.log('Book successfully updated');
+			res.redirect('/')
+		})
+		.catch(err => console.log(err));
+};
 
 // exports.getRemoveBook = (req, res) => {
 // 	const bookId = req.params.bookId;
