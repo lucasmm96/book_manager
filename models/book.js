@@ -9,14 +9,14 @@ class Book {
 		this.finishedAt = finishedAt;
 		this.score = score;
 		this.status = status;
-		this._id = id;
+		this._id = new mongoDb.ObjectId(id);
 	}
 
 	save() {
 		const db = getDb();
 		let dbOperation;
 		if (this._id) {
-			dbOperation = db.collection('books').updateOne({ _id: new mongoDb.ObjectId(this._id) }, { $set: { title: this.title, author: this.author, addedAt: this.addedAt, finishedAt: this.finishedAt, score: this.score, status: this.status }});
+			dbOperation = db.collection('books').updateOne({ _id: this._id }, { $set: this });
 		} else {
 			dbOperation = db.collection('books').insertOne(this);
 		}
