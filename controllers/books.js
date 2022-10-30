@@ -17,7 +17,7 @@ exports.getBookDetail = (req, res) => {
 	Book.findById(bookId)
 		.then(row => {
 			console.log(row);
-			res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: row });			
+			res.render('books/book-detail', { pageTitle: 'Book Detail', route: '/book', book: row });
 		})
 		.catch(err => console.log(err));
 };
@@ -37,30 +37,24 @@ exports.postAddBook = (req, res) => {
 	const newFinishedAt = req.body.finished_at;
 	const newScore = req.body.score;
 	const newStatus = req.body.status;
-	
+
 	const book = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus);
 	book.save()
 		.then(() => {
 			console.log('Book successfully created:');
-			res.redirect('/')		
+			res.redirect('/')
 		})
 		.catch(err => console.log(err));
 };
 
-// exports.getEditBook = (req, res) => {
-// 	const bookId = req.params.bookId;
-// 	req.user.getBooks({ where: { id: bookId } })
-// 		.then(rows => {
-// 			const row = rows[0];
-// 			res.render('books/book-add', {
-// 				pageTitle: 'Edit Book',
-// 				route: '/book',
-// 				book: row,
-// 				editMode: 'true',
-// 			});
-// 		})
-// 		.catch(err => console.log(err));
-// };
+exports.getEditBook = (req, res) => {
+	const bookId = req.params.bookId;
+	Book.findById(bookId)
+		.then(row => {
+			res.render('books/book-add', { pageTitle: 'Edit Book', route: '/book', book: row, editMode: 'true' });
+		})
+		.catch(err => console.log(err));
+};
 
 // exports.postEditBook = (req, res) => {
 // 	const boodId = req.body.id;
