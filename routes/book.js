@@ -10,7 +10,7 @@ router.get('/book/add', booksController.getAddBook);
 
 router.post('/add-book', booksController.postAddBook);
 
-// router.get('/book/edit/:bookId', booksController.getEditBook);
+router.get('/book/edit/:bookId', booksController.getEditBook);
 
 // router.post('/edit-book', booksController.postEditBook);
 
