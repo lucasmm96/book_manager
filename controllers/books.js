@@ -33,12 +33,19 @@ exports.getAddBook = (req, res) => {
 exports.postAddBook = (req, res) => {
 	const newTitle = req.body.title;
 	const newAuthor = req.body.author;
-	const newAddedAt = req.body.added_at;
-	const newFinishedAt = req.body.finished_at;
+	const newAddedAt = req.body.addedAt;
+	const newFinishedAt = req.body.finishedAt;
 	const newScore = req.body.score;
 	const newStatus = req.body.status;
 
-	const newBook = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus, null, req.user._id);
+	const newBook = new Book({
+		title: newTitle,
+		author: newAuthor,
+		addedAt: newAddedAt,
+		finishedAt: newFinishedAt,
+		score: newScore,
+		status: newStatus
+	})
 	newBook.save()
 		.then(() => {
 			console.log('Book successfully created');

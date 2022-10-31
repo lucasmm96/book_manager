@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const User = require('./models/user');
+// const User = require('./models/user');
 const bookRoute = require('./routes/book');
 const homeRoute = require('./routes/home');
 const notFoundRoute = require('./routes/404');
@@ -31,6 +31,7 @@ app.use(notFoundRoute);
 
 mongoose.connect(process.env.mongoURI)
 	.then(() => {
+		console.log('App running on port 3000');
 		app.listen(3000);
 	})
 	.catch(err => console.log(err));
