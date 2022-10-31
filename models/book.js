@@ -9,7 +9,7 @@ class Book {
 		this.finishedAt = finishedAt;
 		this.score = score;
 		this.status = status;
-		this._id = new mongoDb.ObjectId(id);
+		this._id = id
 	}
 
 	save() {
@@ -49,6 +49,14 @@ class Book {
 			})
 			.catch(err => console.log(err));
 	}
+	
+	static deleteById(bookId) {
+		const db = getDb();
+		return db.collection('books').deleteOne({ _id: new mongoDb.ObjectId(bookId) })
+			.then()
+			.catch(err => console.log(err));
+	}
+	
 }
 
 module.exports = Book;
