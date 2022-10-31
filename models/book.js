@@ -9,7 +9,7 @@ class Book {
 		this.finishedAt = finishedAt;
 		this.score = score;
 		this.status = status;
-		this._id = id
+		this._id = id ? mongoDb.ObjectId(id) : null;
 	}
 
 	save() {
