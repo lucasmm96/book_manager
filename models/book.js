@@ -2,7 +2,7 @@ const mongoDb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Book {
-	constructor(title, author, addedAt, finishedAt, score, status, id) {
+	constructor(title, author, addedAt, finishedAt, score, status, id, userId) {
 		this.title = title;
 		this.author = author;
 		this.addedAt = addedAt;
@@ -10,6 +10,7 @@ class Book {
 		this.score = score;
 		this.status = status;
 		this._id = id ? mongoDb.ObjectId(id) : null;
+		this.userId = userId;
 	}
 
 	save() {

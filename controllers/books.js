@@ -38,7 +38,7 @@ exports.postAddBook = (req, res) => {
 	const newScore = req.body.score;
 	const newStatus = req.body.status;
 
-	const newBook = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus);
+	const newBook = new Book (newTitle,newAuthor, newAddedAt, newFinishedAt, newScore, newStatus, null, req.user._id);
 	newBook.save()
 		.then(() => {
 			console.log('Book successfully created');

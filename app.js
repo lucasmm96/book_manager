@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const mongoConnect = require('./util/database').mongoConnect;
+const User = require('./models/user');
 
 const path = require('path');
 
@@ -16,14 +17,14 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-	// User.findByPk(1)
-	// 	.then(user => {
-	// 		req.user = user;
-	// 		next();
-	// 	})
-	// 	.catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+	User.findById('635fd6a9a55c738d273458fc')
+		.then(user => {
+			req.user = user;
+			next();
+		})
+		.catch(err => console.log(err));
+});
 
 app.use(bookRoute);
 app.use(homeRoute);
