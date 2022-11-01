@@ -65,20 +65,27 @@ exports.getEditBook = (req, res) => {
 
 exports.postEditBook = (req, res) => {
 	const bookId = req.body.id;
+	const updatedTitle = req.body.title;
 	const updatedAuthor = req.body.author;
 	const updatedAddedAt = req.body.addedAt;
 	const updatedFinishedAt = req.body.finishedAt;
-	const updatedTitle = req.body.title;
 	const updatedScore = req.body.score;
 	const updatedStatus = req.body.status;
 
-	const updatedBook = new Book (updatedTitle, updatedAuthor, updatedAddedAt, updatedFinishedAt, updatedScore, updatedStatus, bookId);
-	updatedBook.save()
-		.then(() => {
-			console.log('Book successfully updated');
-			res.redirect('/')
-		})
-		.catch(err => console.log(err));
+	Book.findById(bookId).then(book => {
+		book.title = updatedTitle;
+		book.author = updatedAuthor;
+		book.addedAt = updatedAddedAt;
+		book.finishedAt = updatedFinishedAt;
+		book.score = updatedScore;
+		book.status = updatedStatus;
+		return book.save();
+	})
+	.then(() => {
+		console.log('Book successfully updated');
+		res.redirect('/')
+	})
+	.catch(err => console.log(err));
 };
 
 exports.getDeleteBook = (req, res) => {
