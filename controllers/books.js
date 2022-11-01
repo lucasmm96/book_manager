@@ -91,10 +91,8 @@ exports.postEditBook = (req, res) => {
 exports.getDeleteBook = (req, res) => {
 	const bookId = req.params.bookId;
 
-	Book.deleteById(bookId)
-		.then(() => {
-			console.log('Book successfully deleted');
-			res.redirect('/')
-		})
-		.catch(err => console.log(err));
+	Book.findByIdAndRemove(bookId).then(() => {
+		console.log('Book successfully deleted');
+		res.redirect('/')
+	}).catch(err => console.log(err));
 };
