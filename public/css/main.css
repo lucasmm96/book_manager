@@ -83,5 +83,6 @@ td a {
   background: none;
   padding: 0;
   text-align: left;
-  cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
