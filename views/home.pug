@@ -6,14 +6,14 @@ html(lang='en')
     main.main_content
       h2 Welcome to Book Manager!
       .cards-wrapper
-        a.custom-link(href='book/list')
+        a.custom-link(href='admin/home')
           .card
             .container
-              h3 My Books
-              p Manage my books
-        a.custom-link(href='book/add')
+              h3 Admin
+              p Administrator activities
+        a.custom-link(href='user/home')
           .card
             .container
-              h3 Add a Book
-              p Add a new book to my list
+              h3 User
+              p User activities
     include ./includes/footer.pug
