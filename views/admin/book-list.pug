@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main
+      div
+        button
+          a.clean-style(href='/admin/manage-book/add') Add a Book
+      if bookList.length > 0
+        table
+          tr
+            th Title
+            th Options
+          each book in bookList
+            tr
+              td= book.title
+              td
+                a(href=('/admin/manage-book/edit/' + book._id)) Edit
+                a(href=('/admin/manage-book/delete/' + book._id)) Delete
+      else
+        h2 Books not found
+    include ../includes/footer.pug
