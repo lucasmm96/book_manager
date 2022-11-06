@@ -17,7 +17,6 @@ exports.getUserBook = (req, res) => {
 exports.getBookList = (req, res) => {
 	Book.find()
 		.then(bookList => {
-			
 			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: bookList });
 		})
 		.catch(err => console.log(err));

@@ -1,4 +1,5 @@
 const Book = require('../models/book');
+const User = require('../models/user');
 
 exports.getHome = (req, res) => {
 	res.render('admin/home', { pageTitle: 'Admin', route: '/admin' });
@@ -82,4 +83,12 @@ exports.getDeleteBook = (req, res) => {
 	Book.findByIdAndRemove(bookId).then(() => {
 		res.redirect('/admin/manage-book');
 	}).catch(err => console.log(err));
+};
+
+exports.getUserist = (req, res) => {
+	User.find()
+		.then(userList => {
+			res.render('admin/user-list', { pageTitle: 'User List', route: '/admin', userList: userList });
+		})
+		.catch(err => console.log(err));
 };

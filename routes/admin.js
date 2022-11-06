@@ -16,5 +16,7 @@ router.post('/admin/edit-book', adminController.postEditBook);
 
 router.get('/admin/manage-book/delete/:bookId', adminController.getDeleteBook);
 
+router.get('/admin/manage-user', adminController.getUserist);
+
 module.exports = router;
 
