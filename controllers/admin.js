@@ -7,7 +7,7 @@ exports.getHome = (req, res) => {
 exports.getBookList = (req, res) => {
 	Book.find()
 		.then(rows => {
-			res.render('admin/book-list', { pageTitle: 'Book List', route: '/book', bookList: rows });
+			res.render('admin/book-list', { pageTitle: 'Book List', route: '/admin', bookList: rows });
 		})
 		.catch(err => console.log(err));
 };
@@ -15,7 +15,7 @@ exports.getBookList = (req, res) => {
 exports.getAddBook = (req, res) => {
 	res.render('admin/book-add', {
 		pageTitle: 'Add Book',
-		route: '/book',
+		route: '/admin',
 		editMode: 'false',
 	});
 };
@@ -47,7 +47,7 @@ exports.getEditBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then(row => {
-			res.render('admin/book-add', { pageTitle: 'Edit Book', route: '/book', book: row, editMode: 'true' });
+			res.render('admin/book-add', { pageTitle: 'Edit Book', route: '/admin', book: row, editMode: 'true' });
 		})
 		.catch(err => console.log(err));
 };
