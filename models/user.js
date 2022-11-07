@@ -7,7 +7,7 @@ const userSchema = new Schema({
 	book: {
 		items: [
 			{
-				bookId: { type: Schema.Types.ObjectId, required: true },
+				_id: { type: Schema.Types.ObjectId, required: true },
 				addedAt: { type: Date, required: true },
 				finishedAt: { type: Date, required: false },
 				score: { type: Number, required: false },
