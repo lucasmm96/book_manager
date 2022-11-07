@@ -6,7 +6,7 @@ exports.getHome = (req, res) => {
 };
 
 exports.getUserBook = (req, res) => {
-	User.findById('6366bf3b6fa71465188963f1')
+	User.findById('6367e5905de87f7310c03a69')
 		.then(user => {
 			const bookList = user.book.items;
 			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: bookList });
@@ -20,6 +20,40 @@ exports.getBookList = (req, res) => {
 			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: bookList });
 		})
 		.catch(err => console.log(err));
+};
+
+exports.getAddBook = (req, res) => {
+	const bookId = req.params.bookId;
+	Book.findById(bookId)
+		.then(book => {
+			res.render('user/book-add', { pageTitle: 'Book List', route: '/user', book: book });
+		})
+		.catch(err => console.log(err));
+};
+
+exports.postAddBook = (req, res) => {
+	const bookId = req.body.id;
+	const AddedAt = new Date().toISOString().slice(0, 10);
+	const FinishedAt = req.body.finishedAt;
+	const Score = req.body.score;
+	const Status = req.body.status;
+	
+	User.findById('6367e5905de87f7310c03a69')
+		.then(user => {
+			const book = {
+				_id: bookId,
+				addedAt: AddedAt,
+				finishedAt: FinishedAt,
+				score: Score,
+				status: Status
+			}
+			user.book.items.push(book);
+			return user.save();
+		})
+		.then(() => {
+			res.redirect('/user/book/add');
+		})
+		.catch(err => console.log(err));	
 };
 
 exports.getBookDetail = (req, res) => {

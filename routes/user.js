@@ -8,6 +8,10 @@ router.get('/user/book', userController.getUserBook);
 
 router.get('/user/book/add', userController.getBookList);
 
+router.get('/user/book/add/:bookId', userController.getAddBook);
+
+router.post('/user/add-book', userController.postAddBook);
+
 router.get('/user/book/detail/:bookId', userController.getBookDetail);
 
 module.exports = router;
