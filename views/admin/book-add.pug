@@ -15,20 +15,6 @@ html(lang="en")
             input(type='text' name='title' value=(editMode === 'true' ? book.title : ''))
             label(for='author') Author:
             input(type='text' name='author' value=(editMode === 'true' ? book.author : ''))
-            //- label(for='addedAt') AddedAt:
-            //- input(type='date' name='addedAt' value=(editMode === 'true' && book.addedAt ? book.addedAt.toISOString().slice(0, 10) : ''))
-            //- label(for='finishedAt') FinishedAt:
-            //- input(type='date' name='finishedAt' value=(editMode === 'true' && book.finishedAt ? book.finishedAt.toISOString().slice(0, 10) : ''))
-            //- label(for='score') Score:
-            //- input(type='number' name='score' value=(editMode === 'true' ? book.score : ''))
-            //- label(for='status') Status:
-            //- div
-            //-   input(type='radio' name='status' value='want to read' checked=(editMode === 'true' && book.status === 'want to read' ? true : false))
-            //-   span want to read
-            //-   input(type='radio' name='status' value='reading' checked=(editMode === 'true' && book.status === 'reading' ? true : false))
-            //-   span reading
-            //-   input(type='radio' name='status' value='read' checked=(editMode === 'true' && book.status === 'read' ? true : false))
-            //-   span read
             if editMode === 'true'
               input(type='hidden' name='id' value=book._id)
             div.form-submit
