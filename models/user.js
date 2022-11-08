@@ -15,4 +15,17 @@ const userSchema = new Schema({
 	]
 });
 
+userSchema.methods.addBook = function(book, addedAt, finishedAt, score, status) {
+	const userBook = {
+		_id: book._id,
+		addedAt: addedAt,
+		finishedAt: finishedAt,
+		score: score,
+		status: status
+	}
+	console.log(userBook);
+	this.books.push(userBook);
+	return this.save();
+};
+
 module.exports = mongoose.model('User', userSchema);
