@@ -44,8 +44,8 @@ exports.postAddBook = (req, res) => {
 	const status = req.body.status;
 
 	Book.findById(bookId)
-	.then(book => {
-		return req.user.addBook(book, addedAt, finishedAt, score, status);
+	.then(() => {
+		return req.user.addBook(bookId, addedAt, finishedAt, score, status);
 	})
 	.then(() => {
 		res.redirect('/user/book/add');
@@ -55,7 +55,7 @@ exports.postAddBook = (req, res) => {
 
 exports.getRemoveBook = (req, res) => {
 	const bookId = req.params.bookId;
-	Book.findById(bookId).then(book => {
+	Book.findById(bookId).then(() => {
 		return req.user.removeBook(bookId);
 	})
 	.then(() => {

@@ -15,9 +15,9 @@ const userSchema = new Schema({
 	]
 });
 
-userSchema.methods.addBook = function (book, addedAt, finishedAt, score, status) {
+userSchema.methods.addBook = function (bookId, addedAt, finishedAt, score, status) {
 	const userBook = {
-		_id: book._id,
+		_id: bookId,
 		addedAt: addedAt,
 		finishedAt: finishedAt,
 		score: score,
