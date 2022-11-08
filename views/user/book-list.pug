@@ -5,17 +5,35 @@ html(lang="en")
     include ../includes/navbar.pug
     main
       if bookList.length > 0
-        table
-          tr
-            th Title
-            th Author
-            th Options
-          each book in bookList
+        if filter === 'all'
+          table
             tr
-              td= book.title
-              td= book.author
-              td
-                a(href=('/user/book/add/' + book._id)) Add
+              th Title
+              th Author
+            each book in bookList
+              tr
+                td= book.title
+                td= book.author
+                td
+                  a(href=('/user/book/add/' + book._id)) Add
+        else
+          table
+            tr
+              th Title
+              th Author
+              th Added At
+              th Finished At
+              th Status
+              th Options
+            each book in bookList
+              tr
+                td= book._id.title
+                td= book._id.author
+                td= (book.addedAt.toISOString().slice(0, 10))
+                td= (book.finishedAt.toISOString().slice(0, 10))
+                td= book.status
+                td
+                  a(href=('/user/book/remove/' + book._id)) Remove
       else
         h2 Your list is empty.
     include ../includes/footer.pug
