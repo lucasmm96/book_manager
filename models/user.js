@@ -15,7 +15,7 @@ const userSchema = new Schema({
 	]
 });
 
-userSchema.methods.addBook = function(book, addedAt, finishedAt, score, status) {
+userSchema.methods.addBook = function (book, addedAt, finishedAt, score, status) {
 	const userBook = {
 		_id: book._id,
 		addedAt: addedAt,
@@ -23,7 +23,6 @@ userSchema.methods.addBook = function(book, addedAt, finishedAt, score, status) 
 		score: score,
 		status: status
 	}
-	console.log(userBook);
 	this.books.push(userBook);
 	return this.save();
 };
