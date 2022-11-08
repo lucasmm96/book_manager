@@ -16,6 +16,7 @@ html(lang="en")
                 td= book.author
                 td
                   a(href=('/user/book/add/' + book._id) class=(book.isAdded ? 'disabled' : '')) Add
+                  a(href=('/user/book/remove/' + book._id) class=(book.isAdded ? '' : 'disabled')) Remove
         else
           table
             tr
