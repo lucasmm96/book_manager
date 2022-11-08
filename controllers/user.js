@@ -18,7 +18,11 @@ exports.getUserBook = (req, res) => {
 exports.getBookList = (req, res) => {
 	Book.find()
 		.then(books => {
-			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: books, filter: 'all' });
+			const filteredBooks = books.map(book => {
+				const exists = req.user.books.find(value => value._id.toString() === book._id.toString());
+				return exists ? {...book._doc, isAdded: 'true'} : book;
+			});
+			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: filteredBooks, filter: 'all' });
 		})
 		.catch(err => console.log(err));
 };
