@@ -78,10 +78,14 @@ td a {
   border-style: solid;
 }
 
+a {
+  color: green;
+}
+
 a.disabled {
   pointer-events: none;
   cursor: default;
-  color: black;
+  color: red;
 }
 
 .clean-style {
