@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main.main_content
+      div.form-card
+        h3 Add a book:
+        form(action='/user/add-book' method='POST')
+          div.col
+            label(for='title') Title:
+            input(type='text' name='title' value=book.title disabled)
+            label(for='author') Author:
+            input(type='text' name='author' value=book.author disabled)
+            label(for='addedAt') AddedAt:
+            input(type='date' name='addedAt' value=(new Date().toISOString().slice(0, 10)) disabled)
+            label(for='finishedAt') FinishedAt:
+            input(type='date' name='finishedAt')
+            label(for='score') Score:
+            input(type='number' name='score')
+            label(for='status') Status:
+            div
+              input(type='radio' name='status' value='want to read')
+              span want to read
+              input(type='radio' name='status' value='reading')
+              span reading
+              input(type='radio' name='status' value='read')
+              span read
+            input(type='hidden' name='id' value=book._id)
+            div.form-submit
+              button(type='submit') Save
+              button
+                a.clean-style(href='/user/book/add') Cancel
+    include ../includes/footer.pug
