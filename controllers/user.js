@@ -5,14 +5,6 @@ exports.getHome = (req, res) => {
 	res.render('user/home', { pageTitle: 'User', route: '/user' });
 };
 
-exports.getBookList = (req, res) => {
-	Book.find()
-		.then(books => {
-			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: books, filter: 'all' });
-		})
-		.catch(err => console.log(err));
-};
-
 exports.getUserBook = (req, res) => {
 	req.user
 	.populate('books._id')
@@ -21,6 +13,14 @@ exports.getUserBook = (req, res) => {
 		res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: books, filter: 'user' });
 	})
 	.catch(err => console.log(err));
+};
+
+exports.getBookList = (req, res) => {
+	Book.find()
+		.then(books => {
+			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: books, filter: 'all' });
+		})
+		.catch(err => console.log(err));
 };
 
 exports.getAddBook = (req, res) => {
