@@ -27,4 +27,12 @@ userSchema.methods.addBook = function (book, addedAt, finishedAt, score, status)
 	return this.save();
 };
 
+userSchema.methods.removeBook = function (bookId) {
+	const udpdatedBookList = this.books.filter(book => {
+		return book._id.toString() !== bookId.toString();
+	});
+	this.books = udpdatedBookList;
+	return this.save();
+}
+
 module.exports = mongoose.model('User', userSchema);

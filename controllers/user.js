@@ -45,12 +45,21 @@ exports.postAddBook = (req, res) => {
 
 	Book.findById(bookId)
 	.then(book => {
-		console.log(book);
-		console.log(req.user);
 		return req.user.addBook(book, addedAt, finishedAt, score, status);
 	})
 	.then(() => {
 		res.redirect('/user/book/add');
+	})
+	.catch(err => console.log(err));
+};
+
+exports.getRemoveBook = (req, res) => {
+	const bookId = req.params.bookId;
+	Book.findById(bookId).then(book => {
+		return req.user.removeBook(bookId);
+	})
+	.then(() => {
+		res.redirect('/user/book');
 	})
 	.catch(err => console.log(err));
 };

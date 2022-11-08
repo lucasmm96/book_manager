@@ -12,4 +12,6 @@ router.get('/user/book/add/:bookId', userController.getAddBook);
 
 router.post('/user/add-book', userController.postAddBook);
 
+router.get('/user/book/remove/:bookId', userController.getRemoveBook);
+
 module.exports = router;
