@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-	User.findById('6366bf3b6fa71465188963f1')
+	User.findById('636a48f4645ec17fa5c13a10')
 		.then(user => {
 			req.user = user;
 			next();
@@ -37,7 +37,8 @@ mongoose.connect(process.env.mongoURI)
 			if (!user) {
 				const user = new User({
 					username: 'default',
-					email: 'default_user@br.ibm.com'
+					email: 'default_user@br.ibm.com',
+					books: []
 				});
 				user.save();
 			}
