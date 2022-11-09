@@ -14,7 +14,7 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
-	res.render('admin/book-add', {
+	res.render('admin/book-management', {
 		pageTitle: 'Add Book',
 		route: '/admin',
 		editMode: 'false',
@@ -40,7 +40,7 @@ exports.getEditBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then(row => {
-			res.render('admin/book-add', { pageTitle: 'Edit Book', route: '/admin', book: row, editMode: 'true' });
+			res.render('admin/book-management', { pageTitle: 'Edit Book', route: '/admin', book: row, editMode: 'true' });
 		})
 		.catch(err => console.log(err));
 };

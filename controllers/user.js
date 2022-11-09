@@ -31,7 +31,7 @@ exports.getAddBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then(books => {
-			res.render('user/book-add', { pageTitle: 'Book List', route: '/user', book: books });
+			res.render('user/book-management', { pageTitle: 'Book List', route: '/user', book: books });
 		})
 		.catch(err => console.log(err));
 };
@@ -68,7 +68,7 @@ exports.getUpdateBook = (req, res) => {
 			score: selectedBook.score,
 			status: selectedBook.status
 		}
-		res.render('user/book-add', { pageTitle: 'Book Edit', route: '/user', editMode: 'true', book: structuredBook });
+		res.render('user/book-management', { pageTitle: 'Book Edit', route: '/user', editMode: 'true', book: structuredBook });
 	})
 	.catch(err => console.log(err));
 };
