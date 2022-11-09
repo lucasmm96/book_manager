@@ -53,6 +53,40 @@ exports.postAddBook = (req, res) => {
 	.catch(err => console.log(err));
 };
 
+exports.getUpdateBook = (req, res) => {
+	const bookId = req.params.bookId;
+	req.user
+	.populate('books._id')
+	.then(user => {
+		const selectedBook = user.books.find(book => bookId.toString() === book._id._id.toString());
+		const structuredBook = {
+			_id: selectedBook._id._id,
+			title: selectedBook._id.title,
+			author: selectedBook._id.author,
+			addedAt: selectedBook.addedAt,
+			finishedAt: selectedBook.finishedAt,
+			score: selectedBook.score,
+			status: selectedBook.status
+		}
+		res.render('user/book-add', { pageTitle: 'Book Edit', route: '/user', editMode: 'true', book: structuredBook });
+	})
+	.catch(err => console.log(err));
+};
+
+exports.postUpdateBook = (req, res) => {
+	const bookId = req.body.id;
+	const finishedAt = req.body.finishedAt;
+	const score = req.body.score;
+	const status = req.body.status;
+	const bookIndex = req.user.books.findIndex(element => element._id.toString() === bookId.toString())	
+	Book.findById(bookId)
+	.then(() => {
+		return req.user.updateBook(bookIndex, bookId, finishedAt, score, status)
+	})
+	.then (() => res.redirect('/user/book'))
+	.catch(err => console.log(err));
+};
+
 exports.getRemoveBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId).then(() => {
