@@ -24,6 +24,7 @@ html(lang="en")
               th Added At
               th Finished At
               th Status
+              th Score
               th Options
             each book in bookList
               tr
@@ -32,6 +33,7 @@ html(lang="en")
                 td= (book.addedAt.toISOString().slice(0, 10))
                 td= (book.finishedAt.toISOString().slice(0, 10))
                 td= book.status
+                td= book.score
                 td
                   a(href=('/user/book/edit/' + book._id._id)) Edit
                   a(href=('/user/book/remove/' + book._id._id)) Remove
