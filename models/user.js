@@ -27,12 +27,24 @@ userSchema.methods.addBook = function (bookId, addedAt, finishedAt, score, statu
 	return this.save();
 };
 
+userSchema.methods.updateBook = function (bookIndex, bookId, finishedAt, score, status) {
+	const updatedBook = {
+		_id: bookId,
+		addedAt: this.books[bookIndex].addedAt,
+		finishedAt: finishedAt,
+		score: score,
+		status: status
+	}
+	this.books[bookIndex] = updatedBook;
+	return this.save();
+};
+
 userSchema.methods.removeBook = function (bookId) {
 	const udpdatedBookList = this.books.filter(book => {
 		return book._id.toString() !== bookId.toString();
 	});
 	this.books = udpdatedBookList;
 	return this.save();
-}
+};
 
 module.exports = mongoose.model('User', userSchema);
