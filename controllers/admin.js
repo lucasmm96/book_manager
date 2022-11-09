@@ -24,18 +24,10 @@ exports.getAddBook = (req, res) => {
 exports.postAddBook = (req, res) => {
 	const newTitle = req.body.title;
 	const newAuthor = req.body.author;
-	// const newAddedAt = req.body.addedAt;
-	// const newFinishedAt = req.body.finishedAt;
-	// const newScore = req.body.score;
-	// const newStatus = req.body.status;
 
 	const newBook = new Book({
 		title: newTitle,
 		author: newAuthor,
-		// addedAt: newAddedAt,
-		// finishedAt: newFinishedAt,
-		// score: newScore,
-		// status: newStatus
 	})
 	newBook.save()
 		.then(() => {
@@ -57,18 +49,10 @@ exports.postEditBook = (req, res) => {
 	const bookId = req.body.id;
 	const updatedTitle = req.body.title;
 	const updatedAuthor = req.body.author;
-	// const updatedAddedAt = req.body.addedAt;
-	// const updatedFinishedAt = req.body.finishedAt;
-	// const updatedScore = req.body.score;
-	// const updatedStatus = req.body.status;
 
 	Book.findById(bookId).then(book => {
 		book.title = updatedTitle;
 		book.author = updatedAuthor;
-		// book.addedAt = updatedAddedAt;
-		// book.finishedAt = updatedFinishedAt;
-		// book.score = updatedScore;
-		// book.status = updatedStatus;
 		return book.save();
 	})
 	.then(() => {
