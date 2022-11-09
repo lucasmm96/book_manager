@@ -6,29 +6,29 @@ html(lang="en")
     main.main_content
       div.form-card
         h3 Add a book:
-        form(action='/user/add-book' method='POST')
+        form(action=(editMode === 'true' ? '/user/edit-book' : '/user/add-book') method='POST')
           div.col
             label(for='title') Title:
             input(type='text' name='title' value=book.title disabled)
             label(for='author') Author:
             input(type='text' name='author' value=book.author disabled)
             label(for='addedAt') AddedAt:
-            input(type='date' name='addedAt' value=(new Date().toISOString().slice(0, 10)) disabled)
+            input(type='date' name='addedAt' value=(editMode === 'true' ? book.addedAt.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)) disabled)
             label(for='finishedAt') FinishedAt:
-            input(type='date' name='finishedAt')
+            input(type='date' name='finishedAt' value=(editMode === 'true' ? book.finishedAt.toISOString().slice(0, 10) : ''))
             label(for='score') Score:
-            input(type='number' name='score')
+            input(type='number' name='score' value=(editMode === 'true' ? book.score : ''))
             label(for='status') Status:
             div
-              input(type='radio' name='status' value='want to read')
+              input(type='radio' name='status' value='want to read' checked=(editMode === 'true' && book.status === 'want to read' ? true : false))
               span want to read
-              input(type='radio' name='status' value='reading')
+              input(type='radio' name='status' value='reading' checked=(editMode === 'true' && book.status === 'reading' ? true : false))
               span reading
-              input(type='radio' name='status' value='read')
+              input(type='radio' name='status' value='read' checked=(editMode === 'true' && book.status === 'read' ? true : false))
               span read
             input(type='hidden' name='id' value=book._id)
             div.form-submit
               button(type='submit') Save
               button
-                a.clean-style(href='/user/book/add') Cancel
+                a.clean-style(href='/user/book') Cancel
     include ../includes/footer.pug
