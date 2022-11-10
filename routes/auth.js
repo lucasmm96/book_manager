@@ -5,7 +5,7 @@ const authController = require('../controllers/auth')
 router.get('/login', authController.getLogin);
 
 router.post('/user-login', (req, res) => {
-  req.isLogged = true;
+  res.setHeader('Set-Cookie', 'isAuthenticated=true')
   res.redirect('/');
 });
 
