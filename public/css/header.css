@@ -23,6 +23,11 @@
   text-decoration: none;
 }
 
+.align_right {
+  position: fixed;
+  right: 20px;
+}
+
 .main_header__item a img {
   position: fixed;
   right: 20px;

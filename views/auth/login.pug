@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main.main_content
+      .cards-wrapper
+        .card
+          .container
+            h3 Login
+            form(action='/login' method='POST')
+              div.col
+                label(for='email') Email:
+                input(type='text' name='email')
+                label(for='password') Password:
+                input(type='password' name='password')
+              div.form-submit
+                button(type='submit') Login
+                button
+                  a.clean-style(href='/') Cancel
+    include ../includes/footer.pug

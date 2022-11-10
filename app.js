@@ -9,6 +9,7 @@ const User = require('./models/user');
 const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
 const homeRoute = require('./routes/home');
+const authRoute = require('./routes/auth')
 const notFoundRoute = require('./routes/error');
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 app.use(adminRoute);
 app.use(userRoute);
 app.use(homeRoute);
+app.use(authRoute);
 app.use(notFoundRoute);
 
 mongoose.connect(process.env.mongoURI)
