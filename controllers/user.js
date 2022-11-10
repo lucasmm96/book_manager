@@ -64,11 +64,11 @@ exports.getUpdateBook = (req, res) => {
 
 exports.postUpdateBook = (req, res) => {
 	const bookId = req.body.id;
-	const bookIndex = req.user.books.findIndex(element => element.id.toString() === bookId.toString())	
+	const bookIndex = req.user.books.findIndex(element => element.id.toString() === bookId.toString())
 	const finishedAt = req.body.finishedAt;
 	const score = req.body.score;
 	const status = req.body.status;
-	
+
 	Book.findById(bookId)
 	.then(() => {
 		return req.user.updateBook(bookIndex, finishedAt, score, status)
