@@ -7,9 +7,11 @@ html(lang='en')
       .cards-wrapper
         .card
           .container
-            h3 Login
+            h4 Login
             form(action='/user-login' method='POST')
               div.col
+                label(for='username') Username:
+                input(type='text' name='username')              
                 label(for='email') Email:
                 input(type='text' name='email')
                 label(for='password') Password:

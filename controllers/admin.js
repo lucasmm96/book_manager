@@ -5,7 +5,7 @@ exports.getHome = (req, res) => {
 	res.render('admin/home', {
 		pageTitle: 'Admin',
 		route: '/admin',
-		// isAuthenticated: isLogged
+		isAuthenticated: req.session.isLoggedIn
 	});
 };
 
@@ -16,7 +16,7 @@ exports.getBookList = (req, res) => {
 				pageTitle: 'Book List',
 				route: '/admin',
 				bookList: rows,
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			});
 		})
 		.catch((err) => console.log(err));
@@ -27,7 +27,7 @@ exports.getAddBook = (req, res) => {
 		pageTitle: 'Add Book',
 		route: '/admin',
 		editMode: 'false',
-		// isAuthenticated: isLogged
+		isAuthenticated: req.session.isLoggedIn
 	});
 };
 
@@ -56,7 +56,7 @@ exports.getEditBook = (req, res) => {
 				route: '/admin',
 				book: row,
 				editMode: 'true',
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			});
 		})
 		.catch((err) => console.log(err));
@@ -96,7 +96,7 @@ exports.getUserist = (req, res) => {
 				pageTitle: 'User List',
 				route: '/admin',
 				userList: userList,
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			});
 		})
 		.catch((err) => console.log(err));

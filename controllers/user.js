@@ -5,12 +5,12 @@ exports.getHome = (req, res) => {
 	res.render('user/home', { 
 		pageTitle: 'User',
 		route: '/user',
-		// isAuthenticated: isLogged
+		isAuthenticated: req.session.isLoggedIn
 	});
 };
 
 exports.getUserBook = (req, res) => {
-	req.user
+	req.session.user
 		.populate('books.id')
 		.then((user) => {
 			return user.books;
@@ -21,7 +21,7 @@ exports.getUserBook = (req, res) => {
 				route: '/user',
 				bookList: userBooks,
 				filter: 'user',
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			})
 		)
 		.catch((err) => console.log(err));
@@ -31,7 +31,7 @@ exports.getBookList = (req, res) => {
 	Book.find()
 		.then((bookList) => {
 			const filteredBooks = bookList.map((mappedItem) => {
-				const exists = req.user.books.find(
+				const exists = req.session.user.books.find(
 					(foundItem) => foundItem.id.toString() === mappedItem.id.toString()
 				);
 				return exists ? { ...mappedItem._doc, isAdded: 'true' } : mappedItem;
@@ -41,7 +41,7 @@ exports.getBookList = (req, res) => {
 				route: '/user',
 				bookList: filteredBooks,
 				filter: 'all',
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			});
 		})
 		.catch((err) => console.log(err));
@@ -55,7 +55,7 @@ exports.getAddBook = (req, res) => {
 				pageTitle: 'Book List',
 				route: '/user',
 				bookItem: book,
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			});
 		})
 		.catch((err) => console.log(err));
@@ -70,7 +70,7 @@ exports.postAddBook = (req, res) => {
 
 	Book.findById(bookId)
 		.then(() => {
-			return req.user.addBook(bookId, addedAt, finishedAt, score, status);
+			return req.session.user.addBook(bookId, addedAt, finishedAt, score, status);
 		})
 		.then(() => {
 			res.redirect('/user/book/add');
@@ -80,7 +80,7 @@ exports.postAddBook = (req, res) => {
 
 exports.getUpdateBook = (req, res) => {
 	const bookId = req.params.bookId;
-	req.user
+	req.session.user
 		.populate('books.id')
 		.then((user) => {
 			return user.books.find(
@@ -93,7 +93,7 @@ exports.getUpdateBook = (req, res) => {
 				route: '/user',
 				bookItem: book,
 				editMode: 'true',
-				// isAuthenticated: isLogged
+				isAuthenticated: req.session.isLoggedIn
 			})
 		)
 		.catch((err) => console.log(err));
@@ -101,7 +101,7 @@ exports.getUpdateBook = (req, res) => {
 
 exports.postUpdateBook = (req, res) => {
 	const bookId = req.body.id;
-	const bookIndex = req.user.books.findIndex(
+	const bookIndex = req.session.user.books.findIndex(
 		(element) => element.id.toString() === bookId.toString()
 	);
 	const finishedAt = req.body.finishedAt;
@@ -110,7 +110,7 @@ exports.postUpdateBook = (req, res) => {
 
 	Book.findById(bookId)
 		.then(() => {
-			return req.user.updateBook(bookIndex, finishedAt, score, status);
+			return req.session.user.updateBook(bookIndex, finishedAt, score, status);
 		})
 		.then(() => res.redirect('/user/book'))
 		.catch((err) => console.log(err));
@@ -120,7 +120,7 @@ exports.getRemoveBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then(() => {
-			return req.user.removeBook(bookId);
+			return req.session.user.removeBook(bookId);
 		})
 		.then(() => {
 			res.redirect('/user/book');
