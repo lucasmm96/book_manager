@@ -7,20 +7,18 @@ exports.getHome = (req, res) => {
 
 exports.getUserBook = (req, res) => {
 	req.user
-	.populate('books._id')
-	.then(user => {
-		const books = user.books;
-		res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: books, filter: 'user' });
-	})
+	.populate('books.id')
+	.then(user => { return user.books })
+	.then(userBooks => res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: userBooks, filter: 'user' }))
 	.catch(err => console.log(err));
 };
 
 exports.getBookList = (req, res) => {
 	Book.find()
-		.then(books => {
-			const filteredBooks = books.map(book => {
-				const exists = req.user.books.find(value => value._id.toString() === book._id.toString());
-				return exists ? {...book._doc, isAdded: 'true'} : book;
+		.then(bookList => {
+			const filteredBooks = bookList.map(mappedItem => {
+				const exists = req.user.books.find(foundItem => foundItem.id.toString() === mappedItem.id.toString());
+				return exists ? {...mappedItem._doc, isAdded: 'true'} : mappedItem;
 			});
 			res.render('user/book-list', { pageTitle: 'Book List', route: '/user', bookList: filteredBooks, filter: 'all' });
 		})
@@ -30,8 +28,8 @@ exports.getBookList = (req, res) => {
 exports.getAddBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
-		.then(books => {
-			res.render('user/book-management', { pageTitle: 'Book List', route: '/user', book: books });
+		.then(book => {
+			res.render('user/book-management', { pageTitle: 'Book List', route: '/user', bookItem: book });
 		})
 		.catch(err => console.log(err));
 };
@@ -56,32 +54,24 @@ exports.postAddBook = (req, res) => {
 exports.getUpdateBook = (req, res) => {
 	const bookId = req.params.bookId;
 	req.user
-	.populate('books._id')
+	.populate('books.id')
 	.then(user => {
-		const selectedBook = user.books.find(book => bookId.toString() === book._id._id.toString());
-		const structuredBook = {
-			_id: selectedBook._id._id,
-			title: selectedBook._id.title,
-			author: selectedBook._id.author,
-			addedAt: selectedBook.addedAt,
-			finishedAt: selectedBook.finishedAt,
-			score: selectedBook.score,
-			status: selectedBook.status
-		}
-		res.render('user/book-management', { pageTitle: 'Book Edit', route: '/user', editMode: 'true', book: structuredBook });
+		return user.books.find(foundItem => bookId.toString() === foundItem.id._id.toString());
 	})
+	.then(book => res.render('user/book-management', { pageTitle: 'Book Edit', route: '/user', bookItem: book, editMode: 'true' }))
 	.catch(err => console.log(err));
 };
 
 exports.postUpdateBook = (req, res) => {
 	const bookId = req.body.id;
+	const bookIndex = req.user.books.findIndex(element => element.id.toString() === bookId.toString())	
 	const finishedAt = req.body.finishedAt;
 	const score = req.body.score;
 	const status = req.body.status;
-	const bookIndex = req.user.books.findIndex(element => element._id.toString() === bookId.toString())	
+	
 	Book.findById(bookId)
 	.then(() => {
-		return req.user.updateBook(bookIndex, bookId, finishedAt, score, status)
+		return req.user.updateBook(bookIndex, finishedAt, score, status)
 	})
 	.then (() => res.redirect('/user/book'))
 	.catch(err => console.log(err));

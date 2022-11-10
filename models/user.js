@@ -6,7 +6,7 @@ const userSchema = new Schema({
 	email: { type: String, required: true },
 	books: [
 		{
-			_id: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
+			id: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
 			addedAt: { type: Date, required: true },
 			finishedAt: { type: Date, required: false },
 			score: { type: Number, required: false },
@@ -16,32 +16,27 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.addBook = function (bookId, addedAt, finishedAt, score, status) {
-	const userBook = {
-		_id: bookId,
+	const newBook = {
+		id: bookId,
 		addedAt: addedAt,
 		finishedAt: finishedAt,
 		score: score,
 		status: status
 	}
-	this.books.push(userBook);
+	this.books.push(newBook);
 	return this.save();
 };
 
-userSchema.methods.updateBook = function (bookIndex, bookId, finishedAt, score, status) {
-	const updatedBook = {
-		_id: bookId,
-		addedAt: this.books[bookIndex].addedAt,
-		finishedAt: finishedAt,
-		score: score,
-		status: status
-	}
-	this.books[bookIndex] = updatedBook;
+userSchema.methods.updateBook = function (bookIndex, finishedAt, score, status) {
+	this.books[bookIndex].finishedAt = finishedAt;
+	this.books[bookIndex].score = score;
+	this.books[bookIndex].status = status;
 	return this.save();
 };
 
 userSchema.methods.removeBook = function (bookId) {
-	const udpdatedBookList = this.books.filter(book => {
-		return book._id.toString() !== bookId.toString();
+	const udpdatedBookList = this.books.filter(filteredItem => {
+		return filteredItem.id.toString() !== bookId.toString();
 	});
 	this.books = udpdatedBookList;
 	return this.save();

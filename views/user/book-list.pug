@@ -10,12 +10,12 @@ html(lang="en")
             tr
               th Title
               th Author
-            each book in bookList
+            each bookItem in bookList
               tr
-                td= book.title
-                td= book.author
+                td= bookItem.title
+                td= bookItem.author
                 td
-                  a(href=('/user/book/add/' + book._id) class=(book.isAdded ? 'disabled' : '')) Add
+                  a(href=('/user/book/add/' + bookItem.id) class=(bookItem.isAdded ? 'disabled' : '')) Add
         else
           table
             tr
@@ -26,17 +26,17 @@ html(lang="en")
               th Status
               th Score
               th Options
-            each book in bookList
+            each bookItem in bookList
               tr
-                td= book._id.title
-                td= book._id.author
-                td= (book.addedAt.toISOString().slice(0, 10))
-                td= (book.finishedAt.toISOString().slice(0, 10))
-                td= book.status
-                td= book.score
+                td= bookItem.id.title
+                td= bookItem.id.author
+                td= (bookItem.addedAt.toISOString().slice(0, 10))
+                td= (bookItem.finishedAt.toISOString().slice(0, 10))
+                td= bookItem.status
+                td= bookItem.score
                 td
-                  a(href=('/user/book/edit/' + book._id._id)) Edit
-                  a(href=('/user/book/remove/' + book._id._id)) Remove
+                  a(href=('/user/book/edit/' + bookItem.id._id)) Edit
+                  a(href=('/user/book/remove/' + bookItem.id._id)) Remove
       else
         h2 Your list is empty.
     include ../includes/footer.pug

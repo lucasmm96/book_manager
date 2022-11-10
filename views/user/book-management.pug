@@ -5,28 +5,31 @@ html(lang="en")
     include ../includes/navbar.pug
     main.main_content
       div.form-card
-        h3 Add a book:
+        if editMode === 'true'
+          h3 Edit a book:
+        else
+          h3 Add a book:
         form(action=(editMode === 'true' ? '/user/edit-book' : '/user/add-book') method='POST')
           div.col
             label(for='title') Title:
-            input(type='text' name='title' value=book.title disabled)
+            input(type='text' name='title' value=bookItem.id.title disabled)
             label(for='author') Author:
-            input(type='text' name='author' value=book.author disabled)
+            input(type='text' name='author' value=bookItem.id.author disabled)
             label(for='addedAt') AddedAt:
-            input(type='date' name='addedAt' value=(editMode === 'true' ? book.addedAt.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)) disabled)
+            input(type='date' name='addedAt' value=(editMode === 'true' ? bookItem.addedAt.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)) disabled)
             label(for='finishedAt') FinishedAt:
-            input(type='date' name='finishedAt' value=(editMode === 'true' ? book.finishedAt.toISOString().slice(0, 10) : ''))
+            input(type='date' name='finishedAt' value=(editMode === 'true' ? bookItem.finishedAt.toISOString().slice(0, 10) : ''))
             label(for='score') Score:
-            input(type='number' name='score' value=(editMode === 'true' ? book.score : ''))
+            input(type='number' name='score' value=(editMode === 'true' ? bookItem.score : ''))
             label(for='status') Status:
             div
-              input(type='radio' name='status' value='want to read' checked=(editMode === 'true' && book.status === 'want to read' ? true : false))
+              input(type='radio' name='status' value='want to read' checked=(editMode === 'true' && bookItem.status === 'want to read' ? true : false))
               span want to read
-              input(type='radio' name='status' value='reading' checked=(editMode === 'true' && book.status === 'reading' ? true : false))
+              input(type='radio' name='status' value='reading' checked=(editMode === 'true' && bookItem.status === 'reading' ? true : false))
               span reading
-              input(type='radio' name='status' value='read' checked=(editMode === 'true' && book.status === 'read' ? true : false))
+              input(type='radio' name='status' value='read' checked=(editMode === 'true' && bookItem.status === 'read' ? true : false))
               span read
-            input(type='hidden' name='id' value=book._id)
+            input(type='hidden' name='id' value=(editMode === 'true' ? value=bookItem.id._id : bookItem._id))
             div.form-submit
               button(type='submit') Save
               button
