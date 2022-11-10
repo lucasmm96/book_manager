@@ -1,3 +1,3 @@
 exports.getHome = (req, res) => {
-	res.render('home', { pageTitle: 'Home', route: '/' });
+	res.render('home', { pageTitle: 'Home', route: '/', isAuthenticated: req.isLogged });
 };

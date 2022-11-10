@@ -2,7 +2,7 @@ const User = require('../models/user');
 const Book = require('../models/book');
 
 exports.getHome = (req, res) => {
-	res.render('user/home', { pageTitle: 'User', route: '/user' });
+	res.render('user/home', { pageTitle: 'User', route: '/user', isAuthenticated: req.isLogged });
 };
 
 exports.getUserBook = (req, res) => {
@@ -16,7 +16,8 @@ exports.getUserBook = (req, res) => {
 				pageTitle: 'Book List',
 				route: '/user',
 				bookList: userBooks,
-				filter: 'user'
+				filter: 'user',
+				isAuthenticated: req.isLogged
 			})
 		)
 		.catch((err) => console.log(err));
@@ -36,6 +37,7 @@ exports.getBookList = (req, res) => {
 				route: '/user',
 				bookList: filteredBooks,
 				filter: 'all',
+				isAuthenticated: req.isLogged
 			});
 		})
 		.catch((err) => console.log(err));
@@ -48,7 +50,8 @@ exports.getAddBook = (req, res) => {
 			res.render('user/book-management', {
 				pageTitle: 'Book List',
 				route: '/user',
-				bookItem: book
+				bookItem: book,
+				isAuthenticated: req.isLogged
 			});
 		})
 		.catch((err) => console.log(err));
@@ -86,6 +89,7 @@ exports.getUpdateBook = (req, res) => {
 				route: '/user',
 				bookItem: book,
 				editMode: 'true',
+				isAuthenticated: req.isLogged
 			})
 		)
 		.catch((err) => console.log(err));
