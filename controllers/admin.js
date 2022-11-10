@@ -7,10 +7,14 @@ exports.getHome = (req, res) => {
 
 exports.getBookList = (req, res) => {
 	Book.find()
-		.then(rows => {
-			res.render('admin/book-list', { pageTitle: 'Book List', route: '/admin', bookList: rows });
+		.then((rows) => {
+			res.render('admin/book-list', {
+				pageTitle: 'Book List',
+				route: '/admin',
+				bookList: rows,
+			});
 		})
-		.catch(err => console.log(err));
+		.catch((err) => console.log(err));
 };
 
 exports.getAddBook = (req, res) => {
@@ -28,21 +32,27 @@ exports.postAddBook = (req, res) => {
 	const newBook = new Book({
 		title: newTitle,
 		author: newAuthor,
-	})
-	newBook.save()
+	});
+	newBook
+		.save()
 		.then(() => {
 			res.redirect('/admin/manage-book');
 		})
-		.catch(err => console.log(err));
+		.catch((err) => console.log(err));
 };
 
 exports.getEditBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
-		.then(row => {
-			res.render('admin/book-management', { pageTitle: 'Edit Book', route: '/admin', book: row, editMode: 'true' });
+		.then((row) => {
+			res.render('admin/book-management', {
+				pageTitle: 'Edit Book',
+				route: '/admin',
+				book: row,
+				editMode: 'true'
+			});
 		})
-		.catch(err => console.log(err));
+		.catch((err) => console.log(err));
 };
 
 exports.postEditBook = (req, res) => {
@@ -50,29 +60,36 @@ exports.postEditBook = (req, res) => {
 	const updatedTitle = req.body.title;
 	const updatedAuthor = req.body.author;
 
-	Book.findById(bookId).then(book => {
-		book.title = updatedTitle;
-		book.author = updatedAuthor;
-		return book.save();
-	})
-	.then(() => {
-		res.redirect('/admin/manage-book');
-	})
-	.catch(err => console.log(err));
+	Book.findById(bookId)
+		.then((book) => {
+			book.title = updatedTitle;
+			book.author = updatedAuthor;
+			return book.save();
+		})
+		.then(() => {
+			res.redirect('/admin/manage-book');
+		})
+		.catch((err) => console.log(err));
 };
 
 exports.getDeleteBook = (req, res) => {
 	const bookId = req.params.bookId;
 
-	Book.findByIdAndRemove(bookId).then(() => {
-		res.redirect('/admin/manage-book');
-	}).catch(err => console.log(err));
+	Book.findByIdAndRemove(bookId)
+		.then(() => {
+			res.redirect('/admin/manage-book');
+		})
+		.catch((err) => console.log(err));
 };
 
 exports.getUserist = (req, res) => {
 	User.find()
-		.then(userList => {
-			res.render('admin/user-list', { pageTitle: 'User List', route: '/admin', userList: userList });
+		.then((userList) => {
+			res.render('admin/user-list', {
+				pageTitle: 'User List',
+				route: '/admin',
+				userList: userList
+			});
 		})
-		.catch(err => console.log(err));
+		.catch((err) => console.log(err));
 };

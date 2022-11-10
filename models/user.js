@@ -10,24 +10,35 @@ const userSchema = new Schema({
 			addedAt: { type: Date, required: true },
 			finishedAt: { type: Date, required: false },
 			score: { type: Number, required: false },
-			status: { type: String, required: false }
-		}
-	]
+			status: { type: String, required: false },
+		},
+	],
 });
 
-userSchema.methods.addBook = function (bookId, addedAt, finishedAt, score, status) {
+userSchema.methods.addBook = function (
+	bookId,
+	addedAt,
+	finishedAt,
+	score,
+	status
+) {
 	const newBook = {
 		id: bookId,
 		addedAt: addedAt,
 		finishedAt: finishedAt,
 		score: score,
-		status: status
-	}
+		status: status,
+	};
 	this.books.push(newBook);
 	return this.save();
 };
 
-userSchema.methods.updateBook = function (bookIndex, finishedAt, score, status) {
+userSchema.methods.updateBook = function (
+	bookIndex,
+	finishedAt,
+	score,
+	status
+) {
 	this.books[bookIndex].finishedAt = finishedAt;
 	this.books[bookIndex].score = score;
 	this.books[bookIndex].status = status;
@@ -35,7 +46,7 @@ userSchema.methods.updateBook = function (bookIndex, finishedAt, score, status) 
 };
 
 userSchema.methods.removeBook = function (bookId) {
-	const udpdatedBookList = this.books.filter(filteredItem => {
+	const udpdatedBookList = this.books.filter((filteredItem) => {
 		return filteredItem.id.toString() !== bookId.toString();
 	});
 	this.books = udpdatedBookList;
