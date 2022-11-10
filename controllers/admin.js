@@ -2,7 +2,11 @@ const Book = require('../models/book');
 const User = require('../models/user');
 
 exports.getHome = (req, res) => {
-	res.render('admin/home', { pageTitle: 'Admin', route: '/admin', isAuthenticated: req.isLogged });
+	res.render('admin/home', {
+		pageTitle: 'Admin',
+		route: '/admin',
+		// isAuthenticated: isLogged
+	});
 };
 
 exports.getBookList = (req, res) => {
@@ -12,7 +16,7 @@ exports.getBookList = (req, res) => {
 				pageTitle: 'Book List',
 				route: '/admin',
 				bookList: rows,
-				isAuthenticated: req.isLogged
+				// isAuthenticated: isLogged
 			});
 		})
 		.catch((err) => console.log(err));
@@ -23,7 +27,7 @@ exports.getAddBook = (req, res) => {
 		pageTitle: 'Add Book',
 		route: '/admin',
 		editMode: 'false',
-		isAuthenticated: req.isLogged
+		// isAuthenticated: isLogged
 	});
 };
 
@@ -52,7 +56,7 @@ exports.getEditBook = (req, res) => {
 				route: '/admin',
 				book: row,
 				editMode: 'true',
-				isAuthenticated: req.isLogged
+				// isAuthenticated: isLogged
 			});
 		})
 		.catch((err) => console.log(err));
@@ -92,7 +96,7 @@ exports.getUserist = (req, res) => {
 				pageTitle: 'User List',
 				route: '/admin',
 				userList: userList,
-				isAuthenticated: req.isLogged
+				// isAuthenticated: isLogged
 			});
 		})
 		.catch((err) => console.log(err));
