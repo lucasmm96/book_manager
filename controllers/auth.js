@@ -3,6 +3,6 @@ exports.getLogin = (req, res) => {
 	res.render('auth/login', {
 		pageTitle: 'Login',
 		route: '/login',
-		// isAuthenticated: isLogged
+		isAuthenticated: isLogged
 	});
 };
