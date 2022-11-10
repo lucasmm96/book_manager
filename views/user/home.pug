@@ -1,0 +1,19 @@
+doctype html
+html(lang='en')
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main.main_content
+      h2 User Menu
+      .cards-wrapper
+        a.custom-link(href='/user/book')
+          .card
+            .container
+              h3 My Books
+              p Manage my books
+        a.custom-link(href='/user/book/add')
+          .card
+            .container
+              h3 Add a Book
+              p Add a new book to my list
+    include  ../includes/footer.pug

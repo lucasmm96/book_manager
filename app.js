@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const User = require('./models/user');
-const bookRoute = require('./routes/book');
+const adminRoute = require('./routes/admin');
+const userRoute = require('./routes/user');
 const homeRoute = require('./routes/home');
-const notFoundRoute = require('./routes/404');
+const notFoundRoute = require('./routes/error');
 
 dotenv.config();
 app.set('view engine', 'pug');
@@ -17,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-	User.findById('6366b249b7f9810f8ff2daaf')
+	User.findById('636a48f4645ec17fa5c13a10')
 		.then(user => {
 			req.user = user;
 			next();
@@ -25,7 +26,8 @@ app.use((req, res, next) => {
 		.catch(err => console.log(err));
 });
 
-app.use(bookRoute);
+app.use(adminRoute);
+app.use(userRoute);
 app.use(homeRoute);
 app.use(notFoundRoute);
 
@@ -35,7 +37,8 @@ mongoose.connect(process.env.mongoURI)
 			if (!user) {
 				const user = new User({
 					username: 'default',
-					email: 'default_user@br.ibm.com'
+					email: 'default_user@br.ibm.com',
+					books: []
 				});
 				user.save();
 			}

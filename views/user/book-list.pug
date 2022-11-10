@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main
+      if bookList.length > 0
+        if filter === 'all'
+          table
+            tr
+              th Title
+              th Author
+            each bookItem in bookList
+              tr
+                td= bookItem.title
+                td= bookItem.author
+                td
+                  a(href=('/user/book/add/' + bookItem.id) class=(bookItem.isAdded ? 'disabled' : '')) Add
+        else
+          table
+            tr
+              th Title
+              th Author
+              th Added At
+              th Finished At
+              th Status
+              th Score
+              th Options
+            each bookItem in bookList
+              tr
+                td= bookItem.id.title
+                td= bookItem.id.author
+                td= (bookItem.addedAt.toISOString().slice(0, 10))
+                td= (bookItem.finishedAt.toISOString().slice(0, 10))
+                td= bookItem.status
+                td= bookItem.score
+                td
+                  a(href=('/user/book/edit/' + bookItem.id._id)) Edit
+                  a(href=('/user/book/remove/' + bookItem.id._id)) Remove
+      else
+        h2 Your list is empty.
+    include ../includes/footer.pug
