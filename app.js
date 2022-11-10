@@ -1,24 +1,36 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+dotenv.config();
 const mongoose = require('mongoose');
-const session = require('express-session')
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path');
+
+const app = express();
+const store = new MongoDBStore({
+	uri: process.env.mongoURI,
+	collection: 'sessions'
+});
 
 const User = require('./models/user');
 const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
 const homeRoute = require('./routes/home');
-const authRoute = require('./routes/auth')
+const authRoute = require('./routes/auth');
 const notFoundRoute = require('./routes/error');
 
-dotenv.config();
+
 app.set('view engine', 'pug');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false }))
+app.use(session({
+	secret: 'my secret',
+	resave: false,
+	saveUninitialized: false,
+	store: store
+}));
 
 app.use((req, res, next) => {
 	User.findById('636a48f4645ec17fa5c13a10')
