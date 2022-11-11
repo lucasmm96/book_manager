@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const favicon = require('serve-favicon');
 dotenv.config();
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -20,6 +21,7 @@ const homeRoute = require('./routes/home');
 const authRoute = require('./routes/auth');
 const notFoundRoute = require('./routes/error');
 
+app.use(favicon(__dirname + '/favicon.ico'));
 app.set('view engine', 'pug');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
