@@ -3,25 +3,28 @@ html(lang='en')
   include ../includes/head.pug
   body
     include ../includes/navbar.pug
-    main.main_content
-      h3= message
-      h4 Are new here? So Register yourself to acess the app! 
-      button
-        a.clean-style(href='/register') Register
-      .cards-wrapper
-        .card
-          .container
-            h4 Login
-            form(action='/user-login' method='POST')
-              div.col
-                label(for='username') Username:
-                input(type='text' name='username')              
-                label(for='email') Email:
-                input(type='text' name='email')
-                label(for='password') Password:
-                input(type='password' name='password')
-              div.form-submit
-                button(type='submit') Login
-                button
-                  a.clean-style(href='/') Cancel
+    main
+      if !isAuthenticated
+        .box-form.center
+          form(action='/user-login' method='POST')
+            label(for='username') Username:
+            input(type='text' name='username')
+            label(for='email') Email:
+            input(type='text' name='email')
+            label(for='password') Password:
+            input(type='password' name='password')
+            .row.pt-20
+              .column
+                input(type="submit", value="Login")
+              .column
+                .button-link
+                  a(href='/') Cancel
+      else
+        .box-form.center
+          form(action='/user-logout' method='POST')
+            h2 Hi #{username}!
+            h4 Would you like to logout?
+            .row.pt-20
+              .column
+                input(type="submit", value="Logout")
     include ../includes/footer.pug

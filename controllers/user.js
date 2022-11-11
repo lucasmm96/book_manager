@@ -1,25 +1,24 @@
 const Book = require('../models/book');
-const messages = require('../public/data/messages.json')[0];
 
 exports.getHome = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	res.render('user/home', { 
 		pageTitle: 'User',
+		pageInfo: 'User Menu',
 		route: '/user',
 		isAuthenticated: req.session.isLoggedIn
 	});
 };
 
 exports.getUserBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	req.user
 		.populate('books.id')
-		.then((user) => {
-			return user.books;
-		})
+		.then((user) => { return user.books; })
 		.then((userBooks) =>
 			res.render('user/book-list', {
 				pageTitle: 'Book List',
+				pageInfo: 'My Books',
 				route: '/user',
 				bookList: userBooks,
 				filter: 'user',
@@ -30,7 +29,7 @@ exports.getUserBook = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	Book.find()
 		.then((bookList) => {
 			const filteredBooks = bookList.map((mappedItem) => {
@@ -41,6 +40,7 @@ exports.getBookList = (req, res) => {
 			});
 			res.render('user/book-list', {
 				pageTitle: 'Book List',
+				pageInfo: 'Add a Book',
 				route: '/user',
 				bookList: filteredBooks,
 				filter: 'all',
@@ -51,12 +51,13 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then((book) => {
 			res.render('user/book-management', {
 				pageTitle: 'Book List',
+				pageInfo: 'Add a Book',
 				route: '/user',
 				bookItem: book,
 				isAuthenticated: req.session.isLoggedIn
@@ -83,7 +84,7 @@ exports.postAddBook = (req, res) => {
 };
 
 exports.getUpdateBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	const bookId = req.params.bookId;
 	req.user
 		.populate('books.id')
@@ -95,6 +96,7 @@ exports.getUpdateBook = (req, res) => {
 		.then((book) =>
 			res.render('user/book-management', {
 				pageTitle: 'Book Edit',
+				pageInfo: 'Edit a Book',
 				route: '/user',
 				bookItem: book,
 				editMode: 'true',

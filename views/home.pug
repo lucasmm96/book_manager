@@ -3,17 +3,17 @@ html(lang='en')
   include ./includes/head.pug
   body
     include ./includes/navbar.pug
-    main.main_content
-      h2 Welcome to Book Manager!
-      .cards-wrapper
-        a.custom-link(href='admin/home')
-          .card
-            .container
-              h3 Admin
-              p Administrator activities
-        a.custom-link(href='user/home')
-          .card
-            .container
-              h3 User
-              p User activities
+    main
+      .box
+        .row
+          .column
+            a.clean-style(href='admin/home')
+              .card
+                h3 Admin
+                p Administrator activities
+          .column
+            a.clean-style(href='user/home')
+              .card
+                h3 User
+                p User activities           
     include ./includes/footer.pug

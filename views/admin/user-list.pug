@@ -9,13 +9,15 @@ html(lang="en")
           tr
             th Username
             th Email
+            th Books
           each user in userList
             tr
               td= user.username
               td= user.email
-              //- td
-              //-   a(href=('/admin/manage-book/edit/' + book._id)) Edit
-              //-   a(href=('/admin/manage-book/delete/' + book._id)) Delete
+              td 
+               ul
+                each book in user.books
+                  li= book.id.title + ' ('+ book.id.author + ')'
       else
         h2 Users not found
     include ../includes/footer.pug

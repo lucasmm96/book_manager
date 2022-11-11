@@ -5,8 +5,7 @@ html(lang="en")
     include ../includes/navbar.pug
     main
       div
-        button
-          a.clean-style(href='/admin/manage-book/add') Add a Book
+        a.table-button(href='/admin/manage-book/add' style='float: right')  Add a Book
       if bookList.length > 0
         table
           tr
@@ -16,8 +15,8 @@ html(lang="en")
             tr
               td= book.title
               td
-                a(href=('/admin/manage-book/edit/' + book._id)) Edit
-                a(href=('/admin/manage-book/delete/' + book._id)) Delete
+                a.table-button(href=('/admin/manage-book/edit/' + book._id)) Edit
+                a.table-button(href=('/admin/manage-book/delete/' + book._id)) Remove
       else
         h2 Books not found
     include ../includes/footer.pug

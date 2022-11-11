@@ -1,10 +1,15 @@
 const User = require('../models/user');
 
 exports.getLogin = (req, res) => {
+	const isLoggedIn = req.session.isLoggedIn;
+	const info = !isLoggedIn ? 'Login' : 'Logout';
+	const username = !isLoggedIn ? '' : req.session.user.username;
 	res.render('auth/login', {
 		pageTitle: 'Login',
+		pageInfo: info,
 		route: '/login',
-		isAuthenticated: req.session.isLoggedIn
+		isAuthenticated: isLoggedIn,
+		username: username
 	});
 };
 
@@ -30,7 +35,8 @@ exports.postLogout = (req, res) => {
 exports.getRegister = (req, res) => {
 	res.render('auth/register', {
 		pageTitle: 'Register',
-		route: '/login',
+		pageInfo: 'Register',
+		route: '/register',
 		isAuthenticated: req.session.isLoggedIn
 	});	
 };

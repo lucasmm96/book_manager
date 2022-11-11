@@ -3,23 +3,21 @@ html(lang='en')
   include ../includes/head.pug
   body
     include ../includes/navbar.pug
-    main.main_content
-      .cards-wrapper
-        .card
-          .container
-            h4 Register
-            form(action='/user-login' method='POST')
-              div.col
-                label(for='username') Username:
-                input(type='text' name='username')              
-                label(for='email') Email:
-                input(type='text' name='email')
-                label(for='password') Password:
-                input(type='password' name='password')
-                label(for='password-confirm') Password Confirmation:
-                input(type='password' name='password-confirm')                
-              div.form-submit
-                button(type='submit') Register
-                button
-                  a.clean-style(href='/') Cancel
+    main
+      .box-form.center
+        form(action='/user-login' method='POST')
+          label(for='username') Username:
+          input(type='text' name='username')
+          label(for='email') Email:
+          input(type='text' name='email')
+          label(for='password') Password:
+          input(type='password' name='password')
+          label(for='password-confirm') Password Confirmation:
+          input(type='password' name='password-confirm')
+        .row.pt-20
+          .column
+            input(type="submit", value="Save")
+          .column
+            .button-link
+              a(href='/') Cancel
     include ../includes/footer.pug

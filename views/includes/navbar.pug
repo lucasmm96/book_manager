@@ -1,18 +1,9 @@
-header.main_header
-  nav.main_header__nav
-    ul.main_header__list
-      li.main_header__item
-        a.active(href='/') Book Manager |
-      li.main_header__item
-        a(href='/' class=(route === '/' ? 'active' : '')) Home
-      li.main_header__item
-        a(href='/admin/home' class=(route === '/admin' ? 'active' : '')) Admin
-      li.main_header__item
-        a(href='/user/home' class=(route === '/user' ? 'active' : '')) User
-      if !isAuthenticated
-        li.main_header__item.align_right
-          a(href='/login' class=(route === '/login' ? 'active' : '')) Login
-      else
-        li.main_header__item.align_right
-          form(action='/user-logout', method='POST')
-            button(type='submit') Logout
+- var userLogin = (!isAuthenticated ? 'Login' : 'Logout')
+.topnav
+  a.highlight(href="/") Book Manager
+  a(href='/admin/home' class=(route === '/admin' ? 'active' : '')) Admin
+  a(href='/user/home' class=(route === '/user' ? 'active' : '')) User
+  a.split(href='/login' class=(route === '/login' ? 'active' : ''))= userLogin
+  a.split(href='/register' class=(route === '/register' ? 'active' : '')) Register
+.center.pt-20
+  h2.text-center= pageInfo
