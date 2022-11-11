@@ -13,7 +13,7 @@ exports.postLogin = (req, res) => {
 		.then(user => {
 			req.session.user = user;
 			req.session.isLoggedIn = true;
-			res.session.save(err => {
+			req.session.save(err => {
 				console.log(err);
 				res.redirect('/');	
 			});
@@ -25,4 +25,16 @@ exports.postLogout = (req, res) => {
 	req.session.destroy(() => {
 		res.redirect('/login');
 	})
+};
+
+exports.getRegister = (req, res) => {
+	res.render('auth/register', {
+		pageTitle: 'Register',
+		route: '/login',
+		isAuthenticated: req.session.isLoggedIn
+	});	
+};
+
+exports.postRegister = (req, res) => {
+	
 };

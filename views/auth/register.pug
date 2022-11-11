@@ -4,14 +4,10 @@ html(lang='en')
   body
     include ../includes/navbar.pug
     main.main_content
-      h3= message
-      h4 Are new here? So Register yourself to acess the app! 
-      button
-        a.clean-style(href='/register') Register
       .cards-wrapper
         .card
           .container
-            h4 Login
+            h4 Register
             form(action='/user-login' method='POST')
               div.col
                 label(for='username') Username:
@@ -20,8 +16,10 @@ html(lang='en')
                 input(type='text' name='email')
                 label(for='password') Password:
                 input(type='password' name='password')
+                label(for='password-confirm') Password Confirmation:
+                input(type='password' name='password-confirm')                
               div.form-submit
-                button(type='submit') Login
+                button(type='submit') Register
                 button
                   a.clean-style(href='/') Cancel
     include ../includes/footer.pug
