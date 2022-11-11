@@ -20,7 +20,6 @@ const homeRoute = require('./routes/home');
 const authRoute = require('./routes/auth');
 const notFoundRoute = require('./routes/error');
 
-
 app.set('view engine', 'pug');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +30,15 @@ app.use(session({
 	saveUninitialized: false,
 	store: store
 }));
+
+app.use((req, res, next) => {
+	User.findById(req.session.user._id)
+		.then(user => {
+			req.user = user;
+			next();
+		})
+		.catch(err => console.log(err));
+});
 
 app.use(adminRoute);
 app.use(userRoute);
