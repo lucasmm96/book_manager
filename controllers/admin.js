@@ -1,7 +1,9 @@
 const Book = require('../models/book');
 const User = require('../models/user');
+const messages = require('../public/data/messages.json')[0];
 
 exports.getHome = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	res.render('admin/home', {
 		pageTitle: 'Admin',
 		route: '/admin',
@@ -10,6 +12,7 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	Book.find()
 		.then((rows) => {
 			res.render('admin/book-list', {
@@ -23,6 +26,7 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	res.render('admin/book-management', {
 		pageTitle: 'Add Book',
 		route: '/admin',
@@ -34,7 +38,6 @@ exports.getAddBook = (req, res) => {
 exports.postAddBook = (req, res) => {
 	const newTitle = req.body.title;
 	const newAuthor = req.body.author;
-
 	const newBook = new Book({
 		title: newTitle,
 		author: newAuthor,
@@ -48,6 +51,7 @@ exports.postAddBook = (req, res) => {
 };
 
 exports.getEditBook = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then((row) => {
@@ -90,6 +94,7 @@ exports.getDeleteBook = (req, res) => {
 };
 
 exports.getUserist = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	User.find()
 		.then((userList) => {
 			res.render('admin/user-list', {

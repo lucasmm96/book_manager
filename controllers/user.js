@@ -1,7 +1,8 @@
-const User = require('../models/user');
 const Book = require('../models/book');
+const messages = require('../public/data/messages.json')[0];
 
 exports.getHome = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	res.render('user/home', { 
 		pageTitle: 'User',
 		route: '/user',
@@ -10,7 +11,8 @@ exports.getHome = (req, res) => {
 };
 
 exports.getUserBook = (req, res) => {
-	req.session.user
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
+	req.user
 		.populate('books.id')
 		.then((user) => {
 			return user.books;
@@ -28,10 +30,11 @@ exports.getUserBook = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	Book.find()
 		.then((bookList) => {
 			const filteredBooks = bookList.map((mappedItem) => {
-				const exists = req.session.user.books.find(
+				const exists = req.user.books.find(
 					(foundItem) => foundItem.id.toString() === mappedItem.id.toString()
 				);
 				return exists ? { ...mappedItem._doc, isAdded: 'true' } : mappedItem;
@@ -48,6 +51,7 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then((book) => {
@@ -70,7 +74,7 @@ exports.postAddBook = (req, res) => {
 
 	Book.findById(bookId)
 		.then(() => {
-			return req.session.user.addBook(bookId, addedAt, finishedAt, score, status);
+			return req.user.addBook(bookId, addedAt, finishedAt, score, status);
 		})
 		.then(() => {
 			res.redirect('/user/book/add');
@@ -79,8 +83,9 @@ exports.postAddBook = (req, res) => {
 };
 
 exports.getUpdateBook = (req, res) => {
+	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', route: '/login', message: messages.notLogged }) }
 	const bookId = req.params.bookId;
-	req.session.user
+	req.user
 		.populate('books.id')
 		.then((user) => {
 			return user.books.find(
@@ -101,7 +106,7 @@ exports.getUpdateBook = (req, res) => {
 
 exports.postUpdateBook = (req, res) => {
 	const bookId = req.body.id;
-	const bookIndex = req.session.user.books.findIndex(
+	const bookIndex = req.user.books.findIndex(
 		(element) => element.id.toString() === bookId.toString()
 	);
 	const finishedAt = req.body.finishedAt;
@@ -110,7 +115,7 @@ exports.postUpdateBook = (req, res) => {
 
 	Book.findById(bookId)
 		.then(() => {
-			return req.session.user.updateBook(bookIndex, finishedAt, score, status);
+			return req.user.updateBook(bookIndex, finishedAt, score, status);
 		})
 		.then(() => res.redirect('/user/book'))
 		.catch((err) => console.log(err));
@@ -120,7 +125,7 @@ exports.getRemoveBook = (req, res) => {
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then(() => {
-			return req.session.user.removeBook(bookId);
+			return req.user.removeBook(bookId);
 		})
 		.then(() => {
 			res.redirect('/user/book');
