@@ -2,7 +2,6 @@ const Book = require('../models/book');
 const User = require('../models/user');
 
 exports.getHome = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	res.render('admin/home', {
 		pageTitle: 'Admin',
 		pageInfo: 'Administrator Menu',
@@ -12,7 +11,6 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	Book.find()
 		.then((rows) => {
 			res.render('admin/book-list', {
@@ -27,7 +25,6 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	res.render('admin/book-management', {
 		pageTitle: 'Add Book',
 		pageInfo: 'Add a Book',
@@ -53,7 +50,6 @@ exports.postAddBook = (req, res) => {
 };
 
 exports.getEditBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then((row) => {
@@ -96,7 +92,6 @@ exports.getDeleteBook = (req, res) => {
 };
 
 exports.getUserist = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	User.find()
 		.populate('books.id')
 		.then((userList) => {

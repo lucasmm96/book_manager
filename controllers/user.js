@@ -1,7 +1,6 @@
 const Book = require('../models/book');
 
 exports.getHome = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	res.render('user/home', { 
 		pageTitle: 'User',
 		pageInfo: 'User Menu',
@@ -11,7 +10,6 @@ exports.getHome = (req, res) => {
 };
 
 exports.getUserBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	req.user
 		.populate('books.id')
 		.then((user) => { return user.books; })
@@ -29,7 +27,6 @@ exports.getUserBook = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	Book.find()
 		.then((bookList) => {
 			const filteredBooks = bookList.map((mappedItem) => {
@@ -51,7 +48,6 @@ exports.getBookList = (req, res) => {
 };
 
 exports.getAddBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	const bookId = req.params.bookId;
 	Book.findById(bookId)
 		.then((book) => {
@@ -84,7 +80,6 @@ exports.postAddBook = (req, res) => {
 };
 
 exports.getUpdateBook = (req, res) => {
-	if (!req.session.isLoggedIn) { return res.render('auth/login', { pageTitle: 'Login', pageInfo: 'Login', route: '/login' }) }
 	const bookId = req.params.bookId;
 	req.user
 		.populate('books.id')
