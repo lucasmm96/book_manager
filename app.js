@@ -51,17 +51,7 @@ app.use(notFoundRoute);
 
 mongoose.connect(process.env.mongoURI)
 	.then(() => {
-		User.findOne().then(user => {
-			if (!user) {
-				const user = new User({
-					username: 'default',
-					email: 'default_user@br.ibm.com',
-					books: []
-				});
-				user.save();
-			}
-		});
-		console.log('App running on port 3000');
 		app.listen(3000);
+		console.log('App running on port 3000');
 	})
 	.catch(err => console.log(err));
