@@ -7,8 +7,6 @@ html(lang='en')
       if !isAuthenticated
         .box-form.center
           form(action='/user-login' method='POST')
-            label(for='username') Username:
-            input(type='text' name='username')
             label(for='email') Email:
             input(type='text' name='email')
             label(for='password') Password:
