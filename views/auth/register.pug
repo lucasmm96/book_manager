@@ -5,19 +5,19 @@ html(lang='en')
     include ../includes/navbar.pug
     main
       .box-form.center
-        form(action='/user-login' method='POST')
+        form(action='/user-register' method='POST')
           label(for='username') Username:
           input(type='text' name='username')
           label(for='email') Email:
           input(type='text' name='email')
           label(for='password') Password:
           input(type='password' name='password')
-          label(for='password-confirm') Password Confirmation:
-          input(type='password' name='password-confirm')
-        .row.pt-20
-          .column
-            input(type="submit", value="Save")
-          .column
-            .button-link
-              a(href='/') Cancel
+          label(for='checkPassword') Password Confirmation:
+          input(type='password' name='checkPassword')
+          .row.pt-20
+            .column
+              input(type="submit", value="Save")
+            .column
+              .button-link
+                a(href='/') Cancel
     include ../includes/footer.pug
