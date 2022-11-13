@@ -9,7 +9,8 @@ exports.getLogin = (req, res) => {
 		pageTitle: 'Login',
 		pageInfo: info,
 		route: '/login',
-		username: username
+		username: username,
+		userFeedback: req.flash('errorMessage')
 	});
 };
 
@@ -19,6 +20,7 @@ exports.postLogin = (req, res) => {
 	User.findOne({ email: email })
 		.then(result => {
 			if (!result) {
+				req.flash('errorMessage', 'Invalid email or password.');
 				return res.redirect('/login')
 			}
 			bcrypt.compare(password, result.password)
@@ -32,6 +34,7 @@ exports.postLogin = (req, res) => {
 						})
 					}
 					req.session.isLoggedIn = false;
+					req.flash('errorMessage', 'Invalid email or password.');
 					res.redirect('/login');
 				})
 				.catch(err => console.log(err));

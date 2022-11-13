@@ -7,3 +7,5 @@
   a.split(href='/register' class=(route === '/register' ? 'active' : '')) Register
 .center.pt-20
   h2.text-center= pageInfo
+  if userFeedback
+    p= userFeedback

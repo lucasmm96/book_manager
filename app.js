@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const { randomBytes } = require('crypto');
+const flash = require('connect-flash');
 const path = require('path');
 
 const app = express();
@@ -40,6 +41,8 @@ app.use((req, res, next) => {
 	res.locals.csrfToken = req.session.csrf;
 	next();
 });
+
+app.use(flash());
 
 app.use((req, res, next) => {
 	if (!req.session.user) { return next(); }
