@@ -6,6 +6,7 @@ dotenv.config();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const { randomBytes } = require('crypto');
 const path = require('path');
 
 const app = express();
@@ -32,6 +33,13 @@ app.use(session({
 	saveUninitialized: false,
 	store: store
 }));
+
+app.use((req, res, next) => {
+	!req.session.csrf ? req.session.csrf = randomBytes(100).toString('base64') : '';
+	res.locals.isAuthenticated = req.session.isLoggedIn;
+	res.locals.csrfToken = req.session.csrf;
+	next();
+});
 
 app.use((req, res, next) => {
 	if (!req.session.user) { return next(); }

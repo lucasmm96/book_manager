@@ -25,6 +25,7 @@ html(lang="en")
           input(type='hidden' name='id' value=bookItem._id)
           .row.pt-20
             .column
+              input(type='hidden' name='csrf' value=csrfToken)
               input(type="submit", value="Save")
             .column
               .button-link

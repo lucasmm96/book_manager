@@ -9,7 +9,6 @@ exports.getLogin = (req, res) => {
 		pageTitle: 'Login',
 		pageInfo: info,
 		route: '/login',
-		isAuthenticated: isLoggedIn,
 		username: username
 	});
 };
@@ -50,8 +49,7 @@ exports.getRegister = (req, res) => {
 	res.render('auth/register', {
 		pageTitle: 'Register',
 		pageInfo: 'Register',
-		route: '/register',
-		isAuthenticated: req.session.isLoggedIn
+		route: '/register'
 	});	
 };
 

@@ -16,6 +16,7 @@ html(lang='en')
           input(type='password' name='checkPassword')
           .row.pt-20
             .column
+              input(type='hidden' name='csrf' value=csrfToken)
               input(type="submit", value="Save")
             .column
               .button-link

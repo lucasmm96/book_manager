@@ -13,6 +13,7 @@ html(lang='en')
             input(type='password' name='password')
             .row.pt-20
               .column
+                input(type='hidden' name='csrf' value=csrfToken)
                 input(type="submit", value="Login")
               .column
                 .button-link
@@ -24,5 +25,6 @@ html(lang='en')
             h4 Would you like to logout?
             .row.pt-20
               .column
+                input(type='hidden' name='csrf' value=csrfToken)
                 input(type="submit", value="Logout")
     include ../includes/footer.pug
