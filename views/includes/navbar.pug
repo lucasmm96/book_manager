@@ -1,10 +1,11 @@
-- var userLogin = (!isAuthenticated ? 'Login' : 'Logout')
+- var userAction = (!isAuthenticated ? 'Login' : 'Profile')
 .topnav
   a.highlight(href="/") Book Manager
   a(href='/admin/home' class=(route === '/admin' ? 'active' : '')) Admin
   a(href='/user/home' class=(route === '/user' ? 'active' : '')) User
-  a.split(href='/login' class=(route === '/login' ? 'active' : ''))= userLogin
-  a.split(href='/register' class=(route === '/register' ? 'active' : '')) Register
+  a.split(href='/login' class=(route === '/login' ? 'active' : ''))= userAction
+  if !isAuthenticated 
+    a.split(href='/register' class=(route === '/register' ? 'active' : '')) Register
 .center.pt-20
   h2.text-center= pageInfo
   if userFeedback
