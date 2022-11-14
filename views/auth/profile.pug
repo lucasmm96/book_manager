@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main
+      .card.center
+        if isAuthenticated
+          h2 Hello #{ username }!
+        else
+          h2 Hello!
+        h4 What would you like to do?
+        if !isAuthenticated
+          .row.pt-20
+            .column
+              .button-link
+                a(href='/register') Register          
+            .column
+              .button-link
+                a(href='/reset') Reset Password
+            .column
+              .button-link
+                a(href='/login') Login
+        else
+          form(action='/user-logout' method='POST')
+            .row.pt-20
+              .column
+                input(type='hidden' name='csrf' value=csrfToken)
+                input(type="submit", value="Logout")
+    include ../includes/footer.pug

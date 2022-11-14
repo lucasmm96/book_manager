@@ -4,27 +4,17 @@ html(lang='en')
   body
     include ../includes/navbar.pug
     main
-      if !isAuthenticated
-        .box-form.center
-          form(action='/user-login' method='POST')
-            label(for='email') Email:
-            input(type='text' name='email')
-            label(for='password') Password:
-            input(type='password' name='password')
-            .row.pt-20
-              .column
-                input(type='hidden' name='csrf' value=csrfToken)
-                input(type="submit", value="Login")
-              .column
-                .button-link
-                  a(href='/') Cancel
-      else
-        .box-form.center
-          form(action='/user-logout' method='POST')
-            h2 Hi #{username}!
-            h4 Would you like to logout?
-            .row.pt-20
-              .column
-                input(type='hidden' name='csrf' value=csrfToken)
-                input(type="submit", value="Logout")
+      .box-form.center
+        form(action='/user-login' method='POST')
+          label(for='email') Email:
+          input(type='text' name='email')
+          label(for='password') Password:
+          input(type='password' name='password')
+          .row.pt-20
+            .column
+              input(type='hidden' name='csrf' value=csrfToken)
+              input(type="submit", value="Login")
+            .column
+              .button-link
+                a(href='/profile') Cancel
     include ../includes/footer.pug
