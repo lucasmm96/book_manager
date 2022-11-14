@@ -51,10 +51,13 @@ exports.postLogout = (req, res) => {
 };
 
 exports.getRegister = (req, res) => {
+	const flashMessage = req.flash('errorMessage');
+	const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
 	res.render('auth/register', {
 		pageTitle: 'Register',
 		pageInfo: 'Register',
-		route: '/register'
+		route: '/register',
+		userFeedback: userFeedback
 	});	
 };
 
@@ -62,10 +65,15 @@ exports.postRegister = (req, res) => {
 	const username = req.body.username;
 	const email = req.body.email;
 	const password = req.body.password;
-	// const checkPassword = req.body.checkPassword;
+	const checkPassword = req.body.checkPassword;
+	if (password !== checkPassword) {
+		req.flash('errorMessage', { errorMessage: 'Passwords are not matching.' });
+		return res.redirect('/register');
+	}
 	User.findOne({ email: email })	
 		.then(result => {
 			if (result) {
+				req.flash('errorMessage', { errorMessage: 'The email is arealdy registered.' });
 				return res.redirect('/register');
 			}
 			return bcrypt.hash(password, 12)
@@ -75,7 +83,8 @@ exports.postRegister = (req, res) => {
 						email: email,
 						password: hashedPassword,
 						books: []
-					});
+					})
+					.catch(err => console.log(err));
 					return newUser.save();
 			});
 		})
