@@ -1,58 +1,23 @@
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
-dotenv.config();
 const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
 
+dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-exports.getLogin = (req, res) => {
+exports.getProfile = (req, res) => {
 	const isLoggedIn = req.session.isLoggedIn;
-	const info = !isLoggedIn ? 'Login' : 'Logout';
-	const username = !isLoggedIn ? '' : req.session.user.username;
+	const username = isLoggedIn ? req.session.user.username : null;
 	const flashMessage = req.flash('errorMessage');
 	const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
-	res.render('auth/login', {
-		pageTitle: 'Login',
-		pageInfo: info,
-		route: '/login',
+	res.render('auth/profile', {
+		pageTitle: 'Profile',
+		pageInfo: 'Profile',
+		route: '/profile',
 		username: username,
 		userFeedback: userFeedback
 	});
-};
-
-exports.postLogin = (req, res) => {
-	const email = req.body.email;
-	const password = req.body.password;
-	User.findOne({ email: email })
-		.then(result => {
-			if (!result) {
-				req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
-				return res.redirect('/login')
-			}
-			bcrypt.compare(password, result.password)
-				.then(matchResult => {
-					if (matchResult) {
-						req.session.user = result;
-						req.session.isLoggedIn = true;
-						return req.session.save(err => {
-							err ? console.log(err) : '';
-							res.redirect('/');
-						})
-					}
-					req.session.isLoggedIn = false;
-					req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
-					res.redirect('/login');
-				})
-				.catch(err => console.log(err));
-		})
-		.catch(err => console.log(err));
-};
-
-exports.postLogout = (req, res) => {
-	req.session.destroy(() => {
-		res.redirect('/login');
-	})
 };
 
 exports.getRegister = (req, res) => {
@@ -105,4 +70,65 @@ exports.postRegister = (req, res) => {
 		.catch(err => {
 			console.log(err);
 		});
+};
+
+exports.getReset = (req, res) => {
+	const flashMessage = req.flash('errorMessage');
+	const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
+	res.render('auth/reset', {
+		pageTitle: 'Reset',
+		pageInfo: 'Password Reset',
+		route: '/profile',
+		userFeedback: userFeedback		
+	});
+};
+
+exports.postReset = (req, res) => {
+	console.log('reseting pwd');
+	res.redirect('/login')
+};
+
+exports.getLogin = (req, res) => {
+	const flashMessage = req.flash('errorMessage');
+	const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
+	res.render('auth/login', {
+		pageTitle: 'Login',
+		pageInfo: 'Login',
+		route: '/profile',
+		userFeedback: userFeedback
+	});
+};
+
+exports.postLogin = (req, res) => {
+	const email = req.body.email;
+	const password = req.body.password;
+	User.findOne({ email: email })
+		.then(result => {
+			if (!result) {
+				req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
+				return res.redirect('/login')
+			}
+			bcrypt.compare(password, result.password)
+				.then(matchResult => {
+					if (matchResult) {
+						req.session.user = result;
+						req.session.isLoggedIn = true;
+						return req.session.save(err => {
+							err ? console.log(err) : '';
+							res.redirect('/');
+						})
+					}
+					req.session.isLoggedIn = false;
+					req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
+					res.redirect('/login');
+				})
+				.catch(err => console.log(err));
+		})
+		.catch(err => console.log(err));
+};
+
+exports.postLogout = (req, res) => {
+	req.session.destroy(() => {
+		res.redirect('/profile');
+	})
 };
