@@ -1,0 +1,18 @@
+doctype html
+html(lang='en')
+  include ../includes/head.pug
+  body
+    include ../includes/navbar.pug
+    main
+      .box-form.center
+        form(action='/user-reset' method='POST')
+          label(for='email') Email:
+          input(type='text' name='email')
+          .row.pt-20
+            .column
+              input(type='hidden' name='csrf' value=csrfToken)
+              input(type="submit", value="Reset")
+            .column
+              .button-link
+                a(href='/profile') Cancel
+    include ../includes/footer.pug
