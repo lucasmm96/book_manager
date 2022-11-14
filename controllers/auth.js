@@ -1,5 +1,10 @@
 const bcrypt = require('bcryptjs');
+const dotenv = require('dotenv');
+dotenv.config();
+const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.getLogin = (req, res) => {
 	const isLoggedIn = req.session.isLoggedIn;
@@ -84,12 +89,24 @@ exports.postRegister = (req, res) => {
 						password: hashedPassword,
 						books: []
 					})
-					.catch(err => console.log(err));
 					return newUser.save();
 			});
 		})
 		.then(() => {
-			res.redirect('/login')
+			const msg = {
+				to: email,
+				from: 'lucasma@br.ibm.com',
+				subject: 'Register succeeded.',
+				html: '<h1>You have been successfully registered.</h1>'
+			};
+			return sgMail
+				.send(msg)
+				.then(() => {
+					res.redirect('/login')
+				}, err => {
+					console.error(err);
+					err.response ? console.error(err.response.body) : '';
+				});
 		})
 		.catch(err => {
 			console.log(err);

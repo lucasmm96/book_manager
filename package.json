@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/lucasmm96/book_manager#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^3.1.1",
