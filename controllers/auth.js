@@ -93,19 +93,13 @@ exports.postRegister = (req, res) => {
 			});
 		})
 		.then(() => {
-			const msg = {
-				to: email,
-				from: 'lucasma@br.ibm.com',
-				subject: 'Register succeeded.',
-				html: '<h1>You have been successfully registered.</h1>'
-			};
+			res.redirect('/login')
 			return sgMail
-				.send(msg)
-				.then(() => {
-					res.redirect('/login')
-				}, err => {
-					console.error(err);
-					err.response ? console.error(err.response.body) : '';
+				.send({
+					to: email,
+					from: 'lucasma@br.ibm.com',
+					subject: 'Register succeeded.',
+					html: '<h1>You have been successfully registered.</h1>'
 				});
 		})
 		.catch(err => {
