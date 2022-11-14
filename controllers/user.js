@@ -4,8 +4,7 @@ exports.getHome = (req, res) => {
 	res.render('user/home', { 
 		pageTitle: 'User',
 		pageInfo: 'User Menu',
-		route: '/user',
-		isAuthenticated: req.session.isLoggedIn
+		route: '/user'
 	});
 };
 
@@ -19,8 +18,7 @@ exports.getUserBook = (req, res) => {
 				pageInfo: 'My Books',
 				route: '/user',
 				bookList: userBooks,
-				filter: 'user',
-				isAuthenticated: req.session.isLoggedIn
+				filter: 'user'
 			})
 		)
 		.catch((err) => console.log(err));
@@ -40,8 +38,7 @@ exports.getBookList = (req, res) => {
 				pageInfo: 'Add a Book',
 				route: '/user',
 				bookList: filteredBooks,
-				filter: 'all',
-				isAuthenticated: req.session.isLoggedIn
+				filter: 'all'
 			});
 		})
 		.catch((err) => console.log(err));
@@ -55,8 +52,7 @@ exports.getAddBook = (req, res) => {
 				pageTitle: 'Book List',
 				pageInfo: 'Add a Book',
 				route: '/user',
-				bookItem: book,
-				isAuthenticated: req.session.isLoggedIn
+				bookItem: book
 			});
 		})
 		.catch((err) => console.log(err));
@@ -94,8 +90,7 @@ exports.getUpdateBook = (req, res) => {
 				pageInfo: 'Edit a Book',
 				route: '/user',
 				bookItem: book,
-				editMode: 'true',
-				isAuthenticated: req.session.isLoggedIn
+				editMode: 'true'
 			})
 		)
 		.catch((err) => console.log(err));
