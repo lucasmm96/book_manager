@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
@@ -58,18 +59,16 @@ exports.postRegister = (req, res) => {
 			});
 		})
 		.then(() => {
-			res.redirect('/login')
+			res.redirect('/login');
 			return sgMail
 				.send({
 					to: email,
 					from: 'lucasma@br.ibm.com',
-					subject: 'Register succeeded.',
+					subject: 'Register succeeded',
 					html: '<h1>You have been successfully registered.</h1>'
 				});
 		})
-		.catch(err => {
-			console.log(err);
-		});
+		.catch(err => console.log(err));
 };
 
 exports.getReset = (req, res) => {
@@ -84,8 +83,21 @@ exports.getReset = (req, res) => {
 };
 
 exports.postReset = (req, res) => {
-	console.log('reseting pwd');
-	res.redirect('/login')
+	const passwordReset = require('../public/data/messages.json')[0].password_reset
+	User.findOne({ email: req.body.email })	
+		.then(user => {
+			if (!user) {
+				req.flash('errorMessage', { errorMessage: 'User not found' });
+				return res.redirect('/reset');
+			}
+			user.resetToken = crypto.randomBytes(32).toString('hex');
+			console.log(user.resetToken);
+			user.resetTokenExpiration = Date.now() + 3600000;
+			user.save();
+			res.redirect('/profile');
+			sgMail.send({ to: req.body.email, ...passwordReset, html: `<h2>Password Reset</h2><p>You requested a password reset.</p><p>Click on the <a href=\"http://localhost:3000/reset/${ user.resetToken }\">LINK</a> to set a new password.</p>` });
+		})
+		.catch(err => console.log(err));
 };
 
 exports.getLogin = (req, res) => {

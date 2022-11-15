@@ -1,5 +1,9 @@
 [
 	{
-		"notLogged": "It seems you're not logged in. Login to have access to the app."
+		"notLogged": "It seems you're not logged in. Login to have access to the app.",
+		"password_reset": {
+			"from": "lucasma@br.ibm.com",
+			"subject": "PASSWORD RESET"
+		}
 	}
 ]
