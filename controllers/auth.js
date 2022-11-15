@@ -91,7 +91,6 @@ exports.postReset = (req, res) => {
 				return res.redirect('/reset');
 			}
 			user.resetToken = crypto.randomBytes(32).toString('hex');
-			console.log(user.resetToken);
 			user.resetTokenExpiration = Date.now() + 3600000;
 			user.save();
 			res.redirect('/profile');
