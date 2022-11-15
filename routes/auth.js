@@ -11,7 +11,11 @@ router.post('/user-register', checkCSRF, authController.postRegister);
 
 router.get('/reset', authController.getReset);
 
-router.post('/user-reset', authController.postReset);
+router.post('/user-reset', checkCSRF, authController.postReset);
+
+router.get('/reset/:token', authController.getNewPassword);
+
+router.post('/new-password', checkCSRF, authController.postNewPassword);
 
 router.get('/login', authController.getLogin);
 

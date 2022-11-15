@@ -76,9 +76,10 @@ exports.getReset = (req, res) => {
 	const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
 	res.render('auth/reset', {
 		pageTitle: 'Reset',
-		pageInfo: 'Password Reset',
+		pageInfo: 'Password Reset: Open request',
 		route: '/profile',
-		userFeedback: userFeedback		
+		userFeedback: userFeedback,
+		action: 'open_request'
 	});
 };
 
@@ -95,6 +96,53 @@ exports.postReset = (req, res) => {
 			user.save();
 			res.redirect('/profile');
 			sgMail.send({ to: req.body.email, ...passwordReset, html: `<h2>Password Reset</h2><p>You requested a password reset.</p><p>Click on the <a href=\"http://localhost:3000/reset/${ user.resetToken }\">LINK</a> to set a new password.</p>` });
+		})
+		.catch(err => console.log(err));
+};
+
+exports.getNewPassword = (req, res) => {
+	const token = req.params.token;
+	User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+		.then(user => {
+			const flashMessage = req.flash('errorMessage');
+			const userFeedback = flashMessage.length > 0 ? flashMessage[0].errorMessage : null;
+			res.render('auth/reset', {
+				pageTitle: 'Reset',
+				pageInfo: 'Password Reset',
+				route: '/profile',
+				userFeedback: userFeedback,
+				action: 'save_request',
+				userId: user._id,
+				userEmail: user.email,
+				userToken: token
+			});
+		})
+		.catch(err => console.log(err));
+};
+
+exports.postNewPassword = (req, res) => {
+	const userId = req.body.id;
+	const token = req.body.token;
+	const newPassword = req.body.password;
+	const checkPassword = req.body.checkPassword;
+	let resetUser;
+	if (newPassword !== checkPassword) {
+		req.flash('errorMessage', { errorMessage: 'Passwords are not matching.' });
+		return res.redirect(`/reset/${ token }`);
+	}
+	User.findOne({ _id: userId, resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+		.then(user => {
+			resetUser = user;
+			return bcrypt.hash(newPassword, 12)
+		})
+		.then(hashedPassword => {
+			resetUser.password = hashedPassword;
+			resetUser.resetToken = undefined;
+			resetUser.resetTokenExpiration = undefined;
+			return resetUser.save();
+		})
+		.then(() => {
+			res.redirect('login')
 		})
 		.catch(err => console.log(err));
 };

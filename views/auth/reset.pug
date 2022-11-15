@@ -5,13 +5,20 @@ html(lang='en')
     include ../includes/navbar.pug
     main
       .box-form.center
-        form(action='/user-reset' method='POST')
+        form(action=(action === 'open_request' ? '/user-reset' : '/new-password') method='POST')
           label(for='email') Email:
-          input(type='text' name='email')
+          input(type='text' name='email' value=(action === 'open_request' ? '' : userEmail) disabled=(action === 'open_request' ? false : true))
+          if action !== 'open_request'
+            label(for='password') Password:
+            input(type='password' name='password')
+            label(for='checkPassword') Password Confirmation:
+            input(type='password' name='checkPassword')
           .row.pt-20
             .column
               input(type='hidden' name='csrf' value=csrfToken)
-              input(type="submit", value="Reset")
+              input(type='hidden' name='id' value=userId)
+              input(type='hidden' name='token' value=userToken)
+              input(type='submit', value=(action === 'open_request' ? 'Reset Password' : 'Update Password'))
             .column
               .button-link
                 a(href='/profile') Cancel
