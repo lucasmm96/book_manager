@@ -21,7 +21,7 @@ const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
 const homeRoute = require('./routes/home');
 const authRoute = require('./routes/auth');
-const notFoundRoute = require('./routes/error');
+const errorController = require('./controllers/error');
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.set('view engine', 'pug');
@@ -58,7 +58,7 @@ app.use(adminRoute);
 app.use(userRoute);
 app.use(homeRoute);
 app.use(authRoute);
-app.use(notFoundRoute);
+app.use(errorController.get404);
 
 mongoose.connect(process.env.mongoURI)
 	.then(() => {
