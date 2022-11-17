@@ -4,12 +4,35 @@ const authController = require('../controllers/auth');
 const checkCSRF = require('../middleware/check-csrf');
 const { check } = require('express-validator');
 const messages = require('../public/data/messages.json')[0].validation_messages
+const User = require('../models/user');
 
 router.get('/profile', authController.getProfile);
 
 router.get('/register', authController.getRegister);
 
-router.post('/user-register', checkCSRF, check('email').isEmail().withMessage(messages.email), authController.postRegister);
+router.post('/user-register',
+  checkCSRF, 
+  check('email')
+    .isEmail()
+    .withMessage( messages.email_invalid)
+    .custom((value, { req }) => {
+      return User.findOne({ email: value })	
+      .then(result => {
+        if (result) {
+          return Promise.reject(messages.email_duplicated)
+        }
+      });
+    }),
+  check('password', messages.password)
+    .isLength({ min: 5 })
+    .isAlphanumeric(),
+  check('checkPassword').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error(messages.password_check) ;
+    }
+    return true;
+  }),
+  authController.postRegister);
 
 router.get('/reset', authController.getReset);
 

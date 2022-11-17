@@ -1,12 +1,17 @@
 [
 	{
-		"notLogged": "It seems you're not logged in. Login to have access to the app.",
-		"password_reset": {
+		"email_to_user": {
 			"from": "lucasma@br.ibm.com",
-			"subject": "PASSWORD RESET"
+			"subjects": {
+				"success_registry": "Register succeeded",
+				"password_reset": "Password Reset"
+			}
 		},
 		"validation_messages": {
-			"email": "Please, enter a valid email."
+			"email_invalid": "Please, enter a valid email.",
+			"email_duplicated": "The email is arealdy registered.",
+			"password": "Please, enter a password with at least 5 characteres with only text and numbers ",
+			"password_check": "Passwords are not matching."
 		}
 	}
 ]

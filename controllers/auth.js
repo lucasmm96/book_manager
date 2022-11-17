@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
+const messages = require('../public/data/messages.json')[0]
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -37,7 +38,6 @@ exports.postRegister = (req, res) => {
 	const username = req.body.username;
 	const email = req.body.email;
 	const password = req.body.password;
-	const checkPassword = req.body.checkPassword;
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(422).render('auth/register', {
@@ -47,30 +47,24 @@ exports.postRegister = (req, res) => {
 			userFeedback: errors.array()[0].msg
 		});
 	}
-	if (password !== checkPassword) {
-		req.flash('errorMessage', { errorMessage: 'Passwords are not matching.' });
-		return res.redirect('/register');
-	}
-	User.findOne({ email: email })	
-		.then(result => {
-			if (result) {
-				req.flash('errorMessage', { errorMessage: 'The email is arealdy registered.' });
-				return res.redirect('/register');
-			}
-			return bcrypt.hash(password, 12)
-				.then(hashedPassword => {
-					const newUser = new User({
-						username: username,
-						email: email,
-						password: hashedPassword,
-						books: []
-					})
-					return newUser.save();
+	bcrypt
+		.hash(password, 12)
+		.then(hashedPassword => {
+			return new User({
+				username: username,
+				email: email,
+				password: hashedPassword,
+				books: []
 			});
 		})
+		.then(newUser => {
+			return newUser.save();
+		})
 		.then(() => {
-			res.redirect('/login');
-			return sgMail
+			return res.redirect('/login');
+		})
+		.then(() => {
+			sgMail
 				.send({
 					to: email,
 					from: 'lucasma@br.ibm.com',
@@ -94,7 +88,6 @@ exports.getReset = (req, res) => {
 };
 
 exports.postReset = (req, res) => {
-	const passwordReset = require('../public/data/messages.json')[0].password_reset
 	User.findOne({ email: req.body.email })	
 		.then(user => {
 			if (!user) {
@@ -105,7 +98,15 @@ exports.postReset = (req, res) => {
 			user.resetTokenExpiration = Date.now() + 3600000;
 			user.save();
 			res.redirect('/profile');
-			sgMail.send({ to: req.body.email, ...passwordReset, html: `<h2>Password Reset</h2><p>You requested a password reset.</p><p>Click on the <a href=\"http://localhost:3000/reset/${ user.resetToken }\">LINK</a> to set a new password.</p>` });
+			sgMail
+				.send({ 
+					to: req.body.email, 
+					from: messages.email_to_user.from, 
+					subject: messages.email_to_user.subjects.password_reset,
+					html: `<h2>Password Reset</h2>
+						<p>You requested a password reset.</p>
+						<p>Click on the <a href=\"http://localhost:3000/reset/${ user.resetToken }\">LINK</a> to set a new password.</p>`
+				});
 		})
 		.catch(err => console.log(err));
 };
