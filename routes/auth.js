@@ -54,6 +54,7 @@ router.post('/user-login',
         if (!user) {
           return Promise.reject(messages.email_or_pwd_not_found)
         }
+        return true;
       });
     }),
   check('password', messages.email_or_pwd_not_found)
