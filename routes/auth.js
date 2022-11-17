@@ -17,8 +17,8 @@ router.post('/user-register',
     .withMessage( messages.email_invalid)
     .custom((value, { req }) => {
       return User.findOne({ email: value })	
-      .then(result => {
-        if (result) {
+      .then(user => {
+        if (user) {
           return Promise.reject(messages.email_duplicated)
         }
       });
@@ -32,7 +32,8 @@ router.post('/user-register',
     }
     return true;
   }),
-  authController.postRegister);
+  authController.postRegister
+);
 
 router.get('/reset', authController.getReset);
 
@@ -44,7 +45,22 @@ router.post('/new-password', checkCSRF, authController.postNewPassword);
 
 router.get('/login', authController.getLogin);
 
-router.post('/user-login', checkCSRF, authController.postLogin);
+router.post('/user-login', 
+  checkCSRF,
+  check('email')
+    .custom((value, { req }) => {
+      return User.findOne({ email: value })	
+      .then(user => {
+        if (!user) {
+          return Promise.reject(messages.email_or_pwd_not_found)
+        }
+      });
+    }),
+  check('password', messages.email_or_pwd_not_found)
+    .isLength({ min: 5 })
+    .isAlphanumeric(),
+  authController.postLogin
+);
 
 router.post('/user-logout', checkCSRF, authController.postLogout);
 

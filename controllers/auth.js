@@ -172,27 +172,33 @@ exports.getLogin = (req, res) => {
 exports.postLogin = (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).render('auth/login', {
+			pageTitle: 'Login',
+			pageInfo: 'Login',
+			route: '/profile',
+			userFeedback: errors.array()[0].msg
+		});
+	}
 	User.findOne({ email: email })
-		.then(result => {
-			if (!result) {
-				req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
-				return res.redirect('/login')
-			}
-			bcrypt.compare(password, result.password)
+		.then(user => {
+			return bcrypt
+			.compare(password, user.password)
 				.then(matchResult => {
 					if (matchResult) {
-						req.session.user = result;
+						req.session.user = user;
 						req.session.isLoggedIn = true;
-						return req.session.save(err => {
-							err ? console.log(err) : '';
-							res.redirect('/');
-						})
+						return req.session
+							.save(err => {
+								err ? console.log(err) : '';
+								res.redirect('/');
+							});
 					}
 					req.session.isLoggedIn = false;
 					req.flash('errorMessage', { errorMessage: 'Invalid email or password.' });
 					res.redirect('/login');
-				})
-				.catch(err => console.log(err));
+				});
 		})
 		.catch(err => console.log(err));
 };

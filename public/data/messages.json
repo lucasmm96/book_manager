@@ -9,6 +9,7 @@
 		},
 		"validation_messages": {
 			"email_invalid": "Please, enter a valid email.",
+			"email_or_pwd_not_found": "Invalid email or password.",
 			"email_duplicated": "The email is arealdy registered.",
 			"password": "Please, enter a password with at least 5 characteres with only text and numbers ",
 			"password_check": "Passwords are not matching."
