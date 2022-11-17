@@ -7,9 +7,9 @@ html(lang='en')
       .box-form.center
         form(action='/user-login' method='POST')
           label(for='email') Email:
-          input(type='text' name='email')
+          input(type='text' name='email' value=oldInput.email)
           label(for='password') Password:
-          input(type='password' name='password')
+          input(type='password' name='password' value=oldInput.password)
           .row.pt-20
             .column
               input(type='hidden' name='csrf' value=csrfToken)

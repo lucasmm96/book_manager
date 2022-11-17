@@ -30,7 +30,8 @@ exports.getRegister = (req, res) => {
 		pageTitle: 'Register',
 		pageInfo: 'Register',
 		route: '/register',
-		userFeedback: userFeedback
+		userFeedback: userFeedback,
+		oldInput: { email: '', password: '', checkPassword: '' }
 	});	
 };
 
@@ -44,7 +45,8 @@ exports.postRegister = (req, res) => {
 			pageTitle: 'Register',
 			pageInfo: 'Register',
 			route: '/register',
-			userFeedback: errors.array()[0].msg
+			userFeedback: errors.array()[0].msg,
+			oldInput: { username: username, email: email, password: password, checkPassword: req.body.checkPassword }
 		});
 	}
 	bcrypt
@@ -165,7 +167,8 @@ exports.getLogin = (req, res) => {
 		pageTitle: 'Login',
 		pageInfo: 'Login',
 		route: '/profile',
-		userFeedback: userFeedback
+		userFeedback: userFeedback,
+		oldInput: { email: '', password: '' }
 	});
 };
 
@@ -178,7 +181,8 @@ exports.postLogin = (req, res) => {
 			pageTitle: 'Login',
 			pageInfo: 'Login',
 			route: '/profile',
-			userFeedback: errors.array()[0].msg
+			userFeedback: errors.array()[0].msg,
+			oldInput: { email: email, password: password }
 		});
 	}
 	User.findOne({ email: email })

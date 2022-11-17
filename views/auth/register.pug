@@ -7,13 +7,13 @@ html(lang='en')
       .box-form.center
         form(action='/user-register' method='POST')
           label(for='username') Username:
-          input(type='text' name='username')
+          input(type='text' name='username' value=oldInput.username)
           label(for='email') Email:
-          input(type='text' name='email')
+          input(type='text' name='email' value=oldInput.email)
           label(for='password') Password:
-          input(type='password' name='password')
+          input(type='password' name='password' value=oldInput.password)
           label(for='checkPassword') Password Confirmation:
-          input(type='password' name='checkPassword')
+          input(type='password' name='checkPassword' value=oldInput.checkPassword)
           .row.pt-20
             .column
               input(type='hidden' name='csrf' value=csrfToken)
