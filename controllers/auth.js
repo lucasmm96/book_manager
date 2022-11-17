@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
+const { validationResult } = require('express-validator');
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -37,6 +38,15 @@ exports.postRegister = (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const checkPassword = req.body.checkPassword;
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).render('auth/register', {
+			pageTitle: 'Register',
+			pageInfo: 'Register',
+			route: '/register',
+			userFeedback: errors.array()[0].msg
+		});
+	}
 	if (password !== checkPassword) {
 		req.flash('errorMessage', { errorMessage: 'Passwords are not matching.' });
 		return res.redirect('/register');

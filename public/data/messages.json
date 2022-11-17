@@ -4,6 +4,9 @@
 		"password_reset": {
 			"from": "lucasma@br.ibm.com",
 			"subject": "PASSWORD RESET"
+		},
+		"validation_messages": {
+			"email": "Please, enter a valid email."
 		}
 	}
 ]

@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/auth')
+const authController = require('../controllers/auth');
 const checkCSRF = require('../middleware/check-csrf');
+const { check } = require('express-validator');
+const messages = require('../public/data/messages.json')[0].validation_messages
 
 router.get('/profile', authController.getProfile);
 
 router.get('/register', authController.getRegister);
 
-router.post('/user-register', checkCSRF, authController.postRegister);
+router.post('/user-register', checkCSRF, check('email').isEmail().withMessage(messages.email), authController.postRegister);
 
 router.get('/reset', authController.getReset);
 
