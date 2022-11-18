@@ -37,8 +37,8 @@ html(lang="en")
                 td= bookItem.id.author
                 td= (bookItem.addedAt ? bookItem.addedAt.toISOString().slice(0, 10): '')
                 td= (bookItem.finishedAt ? bookItem.finishedAt.toISOString().slice(0, 10): '')
-                td= (bookItem.score ? bookItem.score : '')
                 td= bookItem.status
+                td= (bookItem.score ? bookItem.score : '')
                 td
                   a.table-button(href=('/user/book/edit/' + bookItem.id._id)) Edit
                   a.table-button(href=('/user/book/remove/' + bookItem.id._id)) Remove
