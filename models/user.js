@@ -18,13 +18,7 @@ const userSchema = new Schema({
 	],
 });
 
-userSchema.methods.addBook = function (
-	bookId,
-	addedAt,
-	finishedAt,
-	score,
-	status
-) {
+userSchema.methods.addBook = function (bookId, addedAt, finishedAt, score, status) {
 	const newBook = {
 		id: bookId,
 		addedAt: addedAt,
@@ -36,12 +30,7 @@ userSchema.methods.addBook = function (
 	return this.save();
 };
 
-userSchema.methods.updateBook = function (
-	bookIndex,
-	finishedAt,
-	score,
-	status
-) {
+userSchema.methods.updateBook = function (bookIndex, finishedAt, score, status) {
 	this.books[bookIndex].finishedAt = finishedAt;
 	this.books[bookIndex].score = score;
 	this.books[bookIndex].status = status;

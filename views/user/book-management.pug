@@ -5,29 +5,32 @@ html(lang="en")
     include ../includes/navbar.pug
     main
       .box-form.center
-        form(action=(editMode === 'true' ? '/user/edit-book' : '/user/add-book') method='POST')
+        form(action=(editMode ? '/user/edit-book' : '/user/add-book') method='POST')
           label(for='title') Title:
-          input(type='text' name='title' value=(editMode === 'true' ? bookItem.id.title : bookItem.title) disabled)
+          input(type='text' name='title' value=bookItem.title disabled)
           label(for='author') Author:
-          input(type='text' name='author' value=(editMode === 'true' ? bookItem.id.author: bookItem.author) disabled)
-          label(for='addedAt') AddedAt:
-          input(type='date' name='addedAt' value=(editMode === 'true' ? bookItem.addedAt.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)) disabled)
-          label(for='finishedAt') FinishedAt:
-          input(type='date' name='finishedAt' value=(editMode === 'true' ? bookItem.finishedAt.toISOString().slice(0, 10) : ''))
+          input(type='text' name='author' value=bookItem.author disabled)
+          label(for='addedAt') Added At:
+          input(type='date' name='addedAt' value=bookItem.addedAt disabled)
+          label(for='finishedAt') Finished At:
+          input(type='date' name='finishedAt' value=bookItem.finishedAt)
           label(for='score') Score:
-          input(type='number' name='score' value=(editMode === 'true' ? bookItem.score : ''))
+          input(type='number' name='score' value=bookItem.score)
           label(for='status') Status:
           select(name='status')
-            option(selected=(editMode !== 'true' ? true : false) value= '') Select an option
-            option(value='want to read' selected=(editMode === 'true' && bookItem.status === 'want to read' ? true : false)) Want to Read
-            option(value='reading' selected=(editMode === 'true' && bookItem.status === 'reading' ? true : false)) Reading
-            option(value='read' selected=(editMode === 'true' && bookItem.status === 'read' ? true : false)) Read
-          input(type='hidden' name='id' value=bookItem._id)
+            option(selected=(!bookItem.status ? true : false) value= '') Select an option
+            option(value='want to read' selected=(bookItem.status === 'want to read' ? true : false)) Want to Read
+            option(value='reading' selected=(bookItem.status === 'reading' ? true : false)) Reading
+            option(value='read' selected=(bookItem.status === 'read' ? true : false)) Read
           .row.pt-20
             .column
+              input(type='hidden' name='_id' value=bookItem.id)
+              input(type='hidden' name='_title' value=bookItem.title)
+              input(type='hidden' name='_author' value=bookItem.author)
+              input(type='hidden' name='_addedAt' value=bookItem.addedAt)
               input(type='hidden' name='csrf' value=csrfToken)
-              input(type="submit", value="Save")
+              input(type='submit', value='Save')
             .column
               .button-link
-                a(href='/user/book') Cancel
+                a(href=(editMode ? '/user/book' : '/user/book/add')) Cancel
     include ../includes/footer.pug

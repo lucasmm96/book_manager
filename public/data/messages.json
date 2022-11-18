@@ -10,9 +10,16 @@
 		"validation_messages": {
 			"email_invalid": "Please, enter a valid email.",
 			"email_or_pwd_not_found": "Invalid email or password.",
-			"email_duplicated": "The email is arealdy registered.",
-			"password": "Please, enter a password with at least 5 characteres with only text and numbers ",
-			"password_check": "Passwords are not matching."
+			"email_duplicated": "The email is already registered.",
+			"password": "Please, enter a password with at least 5 characters with only text and numbers ",
+			"password_check": "Passwords are not matching.",
+			"finishedAt_empty": "'Finished At' date needs to be filled when the status is 'Read'.",
+			"finishedAt_outOfBounds": "Finished At field needs to be greater than 'Added at' date.",
+			"finishedAt_notEmpty": "'Finished At' date can only be filled when the status is 'Read'.",
+			"score_empty": "'Score' field needs to be filled when the status is 'Read'.",
+			"score_outOfBounds": "'Score' field needs to be between 0 and 10.",
+			"score_notEmpty": "'Score' field can only be filled when the status is 'Read'.",
+			"status_empty": "'Status' choice needs to be pointed."
 		}
 	}
 ]

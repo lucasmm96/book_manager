@@ -131,7 +131,7 @@ a.table-button{
 a.disabled {
   pointer-events: none;
   cursor: default;
-  color: red;
+  color: greenyellow;
 }
 
 input[type=submit]:hover, .button-link:hover, a.table-button:hover {
