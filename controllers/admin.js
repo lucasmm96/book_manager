@@ -19,7 +19,11 @@ exports.getBookList = (req, res) => {
 				bookList: rows
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getAddBook = (req, res) => {
@@ -62,7 +66,11 @@ exports.getEditBook = (req, res) => {
 				editMode: 'true'
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.postEditBook = (req, res) => {
@@ -79,7 +87,11 @@ exports.postEditBook = (req, res) => {
 		.then(() => {
 			res.redirect('/admin/manage-book');
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getDeleteBook = (req, res) => {
@@ -88,7 +100,11 @@ exports.getDeleteBook = (req, res) => {
 		.then(() => {
 			res.redirect('/admin/manage-book');
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getUserist = (req, res) => {
@@ -102,5 +118,9 @@ exports.getUserist = (req, res) => {
 				userList: userList
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
