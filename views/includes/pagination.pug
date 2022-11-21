@@ -1,0 +1,4 @@
+- var pageNum = 1
+.flex-end
+  while pageNum <= numberOfPages
+    a(href=(link + '/?page=' + pageNum) class=(currentPage == pageNum ? 'active' : ''))= pageNum++

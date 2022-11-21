@@ -4,9 +4,9 @@ html(lang="en")
   body
     include ../includes/navbar.pug
     main
-      div
-        a.table-button(href='/admin/manage-book/add' style='float: right')  Add a Book
-      if bookList.length > 0
+      .flex-end
+        a(href='/admin/manage-book/add')  Add a Book
+      if numberOfBooks > 0
         table
           tr
             th Title
@@ -17,6 +17,8 @@ html(lang="en")
               td
                 a.table-button(href=('/admin/manage-book/edit/' + book._id)) Edit
                 a.table-button(href=('/admin/manage-book/delete/' + book._id)) Remove
+        - var link = '/admin/manage-book'
+        include ../includes/pagination.pug
       else
         h2 Books not found
     include ../includes/footer.pug

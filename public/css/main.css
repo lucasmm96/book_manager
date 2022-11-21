@@ -134,7 +134,7 @@ a.disabled {
   color: greenyellow;
 }
 
-input[type=submit]:hover, .button-link:hover, a.table-button:hover {
+input[type=submit]:hover, .button-link:hover, a.table-button:hover, .flex-end a:hover, .flex-end a.active {
   background-color: rgba(0, 0, 0, 0.512);
   color: white;
 }
@@ -163,3 +163,17 @@ th {
   color: white;
 }
 
+.flex-end {
+  display: flex;
+  justify-content: end
+}
+
+.flex-end a {
+  background-color: #000000;
+  color: white;
+  float: left;
+  margin: 10px 5px 5px 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+}

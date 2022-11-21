@@ -1,6 +1,8 @@
 const Book = require('../models/book');
 const User = require('../models/user');
 
+const ITEMS_PER_PAGE = 2;
+
 exports.getHome = (req, res) => {
 	res.render('admin/home', {
 		pageTitle: 'Admin',
@@ -10,14 +12,29 @@ exports.getHome = (req, res) => {
 };
 
 exports.getBookList = (req, res) => {
+	const page = req.query.page;
 	Book.find()
-		.then((rows) => {
-			res.render('admin/book-list', {
-				pageTitle: 'Book List',
-				pageInfo: 'Book List',
-				route: '/admin',
-				bookList: rows
-			});
+		.countDocuments()
+		.then(numberOfBooks => {
+			Book.find()
+				.skip((page - 1) * ITEMS_PER_PAGE)
+				.limit(ITEMS_PER_PAGE)
+				.then(rows => {
+					return res.render('admin/book-list', {
+						pageTitle: 'Book List',
+						pageInfo: 'Book List',
+						route: '/admin',
+						bookList: rows,
+						numberOfBooks: numberOfBooks,
+						numberOfPages: Math.ceil(numberOfBooks/ITEMS_PER_PAGE),
+						currentPage: page || 1
+					});
+				})
+				.catch((err) => {
+					const error = new Error(err);
+					error.httpStatusCode = 500;
+					return next(error);
+				});
 		})
 		.catch((err) => {
 			const error = new Error(err);
