@@ -99,7 +99,11 @@ exports.postAddBook = (req, res) => {
 		.then(() => {
 			res.redirect('/user/book/add');
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getUpdateBook = (req, res) => {
@@ -129,7 +133,7 @@ exports.getUpdateBook = (req, res) => {
 		.catch((err) => console.log(err));
 };
 
-exports.postUpdateBook = (req, res) => {
+exports.postUpdateBook = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.render('user/book-management', {
@@ -159,7 +163,11 @@ exports.postUpdateBook = (req, res) => {
 			return req.user.updateBook(bookIndex, finishedAt, score, status);
 		})
 		.then(() => res.redirect('/user/book'))
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getRemoveBook = (req, res) => {

@@ -4,5 +4,8 @@ html(lang="en")
   body
     include ./includes/navbar.pug
     main
-      h1 Page not Found
+      if errorCode === 500 
+        p We're sorry for that... It will be fixed as soon as possible!
+      else
+        p The page you're looking for does not exist.
     include ./includes/footer.pug

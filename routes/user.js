@@ -22,7 +22,6 @@ router.post('/user/add-book',
       if (req.body.status === 'read') {
         const addedAt = new Date().toISOString().slice(0, 10);
         if (!value) {
-          console.log('value: |', value, "|");
           return Promise.reject(validationMessages.finishedAt_empty);
         }
         if (value <= addedAt) {
@@ -68,10 +67,7 @@ router.post('/user/edit-book',
   checkCSRF,
   check('finishedAt')
     .custom((value, { req }) => {
-      console.log(value);
-      console.log(req.body.status);
       if (req.body.status === 'read') {
-        console.log('value: |', value, "|");
         if (!value) {
           return Promise.reject(validationMessages.finishedAt_empty);
         }

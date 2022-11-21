@@ -31,19 +31,23 @@ exports.getAddBook = (req, res) => {
 	});
 };
 
-exports.postAddBook = (req, res) => {
-	const newTitle = req.body.title;
-	const newAuthor = req.body.author;
+exports.postAddBook = (req, res, next) => {
+	const title = req.body.title;
+	const author = req.body.author;
 	const newBook = new Book({
-		title: newTitle,
-		author: newAuthor,
+		title: title,
+		author: author,
 	});
 	newBook
 		.save()
 		.then(() => {
 			res.redirect('/admin/manage-book');
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.getEditBook = (req, res) => {
